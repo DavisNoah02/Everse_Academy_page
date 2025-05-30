@@ -2,44 +2,53 @@ import { motion } from "framer-motion";
 import SectionHeader from "../shared/SectionHeader";
 import { facts } from "../../data/features";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
+const animations = {
+  container: {
+    animate: { transition: { staggerChildren: 0.15 } }
   },
+  item: {
+    initial: { opacity: 0, y: 40 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
 };
 
 export default function WhyPlatformSection() {
   return (
-    <section className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-4">
-        <SectionHeader
-          title="Learning Facts & Insights"
-          subtitle="Discover the impact of quality education and skill development in Kenya"
+    <section className="py-20 bg-gradient-to-b from-white to-slate-500">
+      <div className="container mx-auto px-6 lg:px-8">
+        <SectionHeader 
+          title="Why Choose Our Platform" 
+          subtitle="Discover what makes us different"
         />
-
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10"
-          variants={staggerContainer}
+        
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16"
+          variants={animations.container}
           initial="initial"
-          animate="animate"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-100px" }}
         >
           {facts.map((fact, idx) => (
             <motion.div
               key={idx}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col items-center text-center"
-              variants={fadeInUp}
+              variants={animations.item}
+              className="group p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl 
+                         border border-gray-100 hover:border-blue-200 
+                         transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{fact.stat}</div>
-              <div className="text-lg font-semibold mb-1">{fact.title}</div>
-              <div className="text-gray-500 dark:text-gray-300 text-sm">{fact.description}</div>
+              <div className="text-4xl font-bold text-blue-600 mb-4 
+                              group-hover:scale-110 transition-transform duration-300">
+                {fact.stat}
+              </div>
+              
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                {fact.title}
+              </h3>
+              
+              <p className="text-gray-600 leading-relaxed">
+                {fact.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
