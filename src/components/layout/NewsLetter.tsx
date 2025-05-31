@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function NewsletterSection() {
@@ -13,12 +13,9 @@ export default function NewsletterSection() {
     setMessage("");
 
     try {
-      // Send email to Resend API
       await axios.post("/api/subscribe", { email });
-
-      // On success
       setIsSubscribed(true);
-      setMessage("Thanks for subscribing! We'll keep you updated.");
+      setMessage("✅ Thanks for subscribing! We'll keep you updated.");
     } catch (error) {
       console.error("Subscription failed:", error);
       setMessage("Something went wrong. Please try again.");
@@ -27,24 +24,30 @@ export default function NewsletterSection() {
     }
   };
 
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
-    <section className="bg-slate-700 text-white py-12">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-        <p className="text-slate-300 mb-6">
-          Be the first to know when we launch. Subscribe to our newsletter for early access and beta testing opportunities.
-        </p>
-
-        {/* Success or Error Message */}
-        {message && (
-          <p className={`mb-4 ${isSubscribed ? "text-green-400" : "text-red-400"}`}>
-            {message}
+    <section className="bg-gradient-to-r from-purple-600 via-gray-600 to-cyan-400 text-white rounded-md p-6 shadow-lg">
+      <div className="max-w-4xl mx-auto flex flex-col gap-6">
+        {/* Heading + Description */}
+        <div className="text-center sm:text-left">
+          <h2 className="text-lg sm:text-xl font-semibold">
+            Get notified! Stay Updated
+          </h2>
+          <p className="text-sm sm:text-base text-slate-200 mt-1 font-normal">
+            Subscribe to our newsletter and never miss important updates, news, or offers.
           </p>
-        )}
+        </div>
 
+        {/* Form */}
         <form
           onSubmit={handleSubscribe}
-          className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto border border-slate-600 p-4 rounded-lg bg-slate-800"
+          className="flex flex-col sm:flex-row items-center gap-4 w-full"
         >
           <input
             type="email"
@@ -52,20 +55,47 @@ export default function NewsletterSection() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full sm:w-auto px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="submit"
             disabled={isLoading || isSubscribed}
-            className={`px-6 py-3 rounded-lg shadow-lg transition-all ${
+            className={` hover:cursor-pointer px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 ${
               isSubscribed
-                ? "bg-blue-500 text-white cursor-default"
-                : "bg-blue-600 text-white hover:bg-blue-800"
+                ? "bg-green-600 cursor-default text-white"
+                : isLoading
+                ? "bg-blue-400 text-white cursor-wait"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
             }`}
           >
-            {isLoading ? "Subscribing..." : isSubscribed ? "Subscribed!" : "Subscribe"}
+            {isLoading
+              ? "Subscribing..."
+              : isSubscribed
+              ? "Subscribed ✅"
+              : "Subscribe"}
+            {!isLoading && !isSubscribed && <span className="ml-2">→</span>}
           </button>
         </form>
+
+        {/* Message */}
+        {message && (
+          <p
+            className={`text-center text-sm ${
+              isSubscribed ? "text-green-400" : "text-red-400"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
+        {/* Unsubscribe */}
+        <p className="text-center text-sm text-slate-300">
+          You can{" "}
+          <a href="/newsletter" className="text-blue-400 underline">
+            unsubscribe
+          </a>{" "}
+          anytime.
+        </p>
       </div>
     </section>
   );
