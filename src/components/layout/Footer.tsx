@@ -47,28 +47,7 @@ const supportLinks = [
 export default function Footer() {
   return (
     <>
-      {/* Newsletter Section */}
-      <section className="bg-slate-700 text-white py-12">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-slate-300 mb-6">
-            Be the first to know when we launch. Subscribe to our newsletter for early access and beta testing opportunities.
-          </p>
-          <form className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto border border-slate-600 p-4 rounded-lg bg-slate-800">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full sm:w-auto px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:cursor-pointer hover:bg-blue-800 transition-all"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
-      </section>
+      
 
       {/* Footer */}
       <footer className="bg-slate-700 text-white relative overflow-hidden">

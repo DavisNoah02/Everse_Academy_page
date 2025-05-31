@@ -240,14 +240,14 @@ export default function CoursesSection() {
             </p>
             <div className="flex flex-row justify-center gap-4">
               <motion.button
-              className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all hover:border hover:border-gray-200"
+              className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all hover:border hover:border-red-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               >
               Request a Course
               </motion.button>
               <motion.button
-              className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:border hover:border-gray-200 transition-all"
+              className="bg-gradient-to-r from-blue-400 to-green-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:border hover:border-red-200 transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               >
