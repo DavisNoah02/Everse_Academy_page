@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Check, Star, Target, Users, Gift, Zap } from "lucide-react";
+import { Rocket, Check, Star, Target, Users, Gift, Zap } from "lucide-react";
 
 const betaBenefits = [
   "Free lifetime access to premium courses",
@@ -19,7 +19,7 @@ const betaSteps = [
 
 export default function JoinBetaSection() {
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-400 to-blue-50/30">
+    <section className="py-20 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-200">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <motion.div
@@ -29,14 +29,15 @@ export default function JoinBetaSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center space-x-2 bg-purple-100 dark:bg-purple-900/30 rounded-full px-4 py-2 mb-4">
-            <Star className="w-4 h-4 text-purple-600" />
-            <span className="text-purple-700 dark:text-purple-300 text-sm font-medium">Limited Beta Access</span>
+          <div className="inline-flex items-center space-x-2 bg-purple-200 dark:bg-purple-900/30 rounded-full px-4 py-2 mb-4">
+            <Star className="w-4 h-4 text-purple-700" />
+            <span className="text-purple-600 text-sm font-medium">Limited Beta Access</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Join Our <span className="text-gradient bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Beta Program</span>
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-5">
+            <Rocket className="w-8 h-10 py-1 text-purple-700" />
+            Join Our <span className="text-gradient bg-gradient-to-r from-purple-900 to-blue-600 bg-clip-text text-transparent">Beta Program</span>
+            </h2>
+          <p className="text-xl text-gray-500 dark:text-gray-300 max-w-3xl mx-auto py-3">
             Be among the first 100 learners to experience Kenya's most innovative tech academy
           </p>
         </motion.div>
@@ -51,7 +52,7 @@ export default function JoinBetaSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-purple-200/50 dark:border-purple-800/50 h-full">
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-purple-200/50 dark:border-purple-800/50 h-full">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
                   <Gift className="w-6 h-6 text-white" />
@@ -131,10 +132,10 @@ export default function JoinBetaSection() {
           viewport={{ once: true }}
         >
           <div className="relative max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <div className="bg-gradient-to-r from-purple-500 via-blue-600 to-cyan-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <Users className="w-6 h-6" />
-                <span className="text-purple-200">Join 2,847+ beta applicants</span>
+                <span className="text-purple-200">Join Other beta applicants</span>
               </div>
               
               <h3 className="text-3xl md:text-4xl font-bold mb-4">Ready to Shape the Future?</h3>

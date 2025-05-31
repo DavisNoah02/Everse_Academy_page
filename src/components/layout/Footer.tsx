@@ -34,15 +34,11 @@ const quickLinks = [
   { name: "About Us", href: "/about" },
   { name: "Courses", href: "/courses" },
   { name: "Instructors", href: "/instructors" },
-  { name: "Success Stories", href: "/testimonials" },
-  { name: "Career Services", href: "/careers" },
   { name: "Blog", href: "/blog" }
 ];
 
 const supportLinks = [
   { name: "Help Center", href: "/help" },
-  { name: "Student Support", href: "/support" },
-  { name: "Technical Support", href: "/tech-support" },
   { name: "Contact Us", href: "/contact" },
   { name: "Privacy Policy", href: "/privacy" },
   { name: "Terms of Service", href: "/terms" }
@@ -50,115 +46,125 @@ const supportLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-800 text-white relative overflow-hidden h-auto">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-50" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(66, 119, 203, 0.05),transparent_50%)]" />
-      
-      <div className="relative">
-        {/* Main Footer Content */}
-        <motion.div className="container mx-auto px-6 py-16" {...animations.container}>
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12">
+    <>
+      {/* Newsletter Section */}
+      <section className="bg-slate-700 text-white py-12">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
+          <p className="text-slate-300 mb-6">
+            Be the first to know when we launch. Subscribe to our newsletter for early access and beta testing opportunities.
+          </p>
+          <form className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto border border-slate-600 p-4 rounded-lg bg-slate-800">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full sm:w-auto px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:cursor-pointer hover:bg-blue-800 transition-all"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-700 text-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-50 h-full" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(66, 119, 203, 0.05),transparent_50%)]" />
+
+        <div className="relative">
+          {/* Main Footer Content */}
+          <motion.div className="container mx-auto px-6 py-3" {...animations.container}>
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 items-start text-left">
+
+              {/* Company Info */}
+              <motion.div className="lg:col-span-2" {...animations.item}>
+                <div className="mb-6">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-4">
+                    Everse Academy Kenya
+                  </h3>
+                  <p className="text-slate-300 text-base leading-normal max-w-lg">
+                    Empowering Kenyans with industry-ready expertise through accessible, high-quality education that bridges the Everse Academy gap and creates opportunities.
+                  </p>
+                </div>
+
+                {/* Contact Info */}
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <div className="p-2 bg-slate-800 rounded-lg">
+                      <Mail className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <span>everse@gmail.com</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <div className="p-2 bg-slate-800 rounded-lg">
+                      <Phone className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <span>+254 729 239 023</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-300">
+                    <div className="p-2 bg-slate-800 rounded-lg">
+                      <MapPin className="w-5 h-5 text-purple-400" />
+                    </div>
+                    <span>Nairobi, Kenya</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Quick Links */}
+              <motion.div {...animations.item}>
+                <h4 className="text-xl font-semibold mb-4 text-white">Quick Links</h4>
+                <ul className="space-y-2">
+                  {quickLinks.map(({ name, href }) => (
+                    <li key={name}>
+                      <Link
+                        to={href}
+                        className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                      >
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
             
-            {/* Company Info */}
-            <motion.div className="lg:col-span-2" {...animations.item}>
-              <div className="mb-6">
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mb-4">
-                  Everse Academy Kenya
-                </h3>
-                <p className="text-slate-300 text-lg leading-relaxed max-w-lg">
-                  Empowering Kenyans with industry-ready expertise through accessible, 
-                  high-quality education that bridges the Everse Academy gap and creates opportunities.
-                </p>
-              </div>
               
-              {/* Contact Info */}
-              <div className="space-y-4 mb-8">
-                <div className="flex items-center gap-3 text-slate-300">
-                  <div className="p-2 bg-slate-800 rounded-lg">
-                    <Mail className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <span>info@skillkenya.com</span>
-                </div>
-                <div className="flex items-center gap-3 text-slate-300">
-                  <div className="p-2 bg-slate-800 rounded-lg">
-                    <Phone className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <span>+254 729 239 023</span>
-                </div>
-                <div className="flex items-center gap-3 text-slate-300">
-                  <div className="p-2 bg-slate-800 rounded-lg">
-                    <MapPin className="w-5 h-5 text-purple-400" />
-                  </div>
-                  <span>Nairobi, Kenya</span>
-                </div>
-              </div>
+              {/* Support Links */}
+              <motion.div {...animations.item}>
+                <h4 className="text-xl font-semibold mb-4 text-white">Support</h4>
+                <ul className="space-y-2">
+                  {supportLinks.map(({ name, href }) => (
+                    <li key={name}>
+                      <Link
+                        to={href}
+                        className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
+                      >
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          </motion.div>
 
-              {/* Social Links */}
-              <div className="flex gap-4">
-                {socialLinks.map(({ Icon, href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl transition-all duration-300 
-                             hover:scale-110 hover:shadow-lg group"
-                  >
-                    <Icon className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div {...animations.item}>
-              <h4 className="text-xl font-semibold mb-6 text-white">Quick Links</h4>
-              <ul className="space-y-3">
-                {quickLinks.map(({ name, href }) => (
-                  <li key={name}>
-                    <Link
-                      to={href}
-                      className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
-                    >
-                      {name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Support Links */}
-            <motion.div {...animations.item}>
-              <h4 className="text-xl font-semibold mb-6 text-white">Support</h4>
-              <ul className="space-y-3">
-                {supportLinks.map(({ name, href }) => (
-                  <li key={name}>
-                    <Link
-                      to={href}
-                      className="text-slate-300 hover:text-white transition-colors duration-200 flex items-center gap-2 group"
-                    >
-                      {name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Bottom Bar */}
-        <motion.div 
-          className="border-t border-slate-800"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          <div className="container mx-auto px-6 py-8">
+          {/* Bottom Bar */}
+          <motion.div
+            className="container mx-auto px-6 py-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-slate-400 text-center md:text-left">
-                &copy; {new Date().getFullYear()} Everse Academy Kenya. All rights reserved. 
-                <span className="ml-2">Made with ❤️ by Noah</span>
+                &copy; {new Date().getFullYear()} Everse Academy Kenya. All rights reserved.
+                <span className="ml-2">Made with ❤️ by Noah Tech</span>
               </p>
               <div className="flex gap-6 text-sm text-slate-400">
                 <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
@@ -166,9 +172,9 @@ export default function Footer() {
                 <Link to="/cookies" className="hover:text-white transition-colors">Cookies</Link>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-    </footer>
+          </motion.div>
+        </div>
+      </footer>
+    </>
   );
 }

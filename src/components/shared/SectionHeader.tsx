@@ -15,8 +15,8 @@ const fadeInUp = {
 export default function SectionHeader({ title, subtitle, className = "" }: SectionHeaderProps) {
   return (
     <motion.div className={`text-center mb-16 ${className}`} {...fadeInUp}>
-      <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{title}</h2>
-      <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+      <h2 className="text-4xl font-bold text-gradient bg-gradient-to-r from-purple-900 to-blue-600 bg-clip-text text-transparent">{title}</h2>
+      <p className="text-xl text-slate-600 max-w-2xl mx-auto py-3">
         {subtitle}
       </p>
     </motion.div>

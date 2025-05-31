@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Clock, Sparkles, Code, Users, Trophy } from "lucide-react";
+import Wavify from "react-wavify";
 
 // Animated particles component
 function AnimatedParticles() {
@@ -144,11 +145,10 @@ function CountdownTimer() {
 
 // Enhanced ProfileStack with better animations
 function ProfileStack() {
-  const profiles = Array.from({ length: 3}, (_, i) => ({
+  const profiles = Array.from({ length: 2}, (_, i) => ({
     id: i,
     gradient: [
       "from-purple-500 to-pink-600",
-     "from-purple-500 to-pink-600",
      "from-purple-500 to-pink-600",
     ][i],
   }));
@@ -327,6 +327,9 @@ export default function HeroLaunchSection() {
           <CountdownTimer />
         </motion.div>
 
+        
+
+        {/* Launching Soon CTA */}
         <motion.div
           className="flex justify-center mb-8"
           initial={{ opacity: 0 }}
@@ -346,8 +349,31 @@ export default function HeroLaunchSection() {
           </motion.div>
         </motion.div>
 
-        <ProfileStack />
+        <div className="pb-8">
+          <ProfileStack />
+        </div>
       </motion.div>
+
+      {/* Wavy Bottom Border */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+        <Wavify
+          fill="url(#2E2F32)" // Use a gradient for smoother blending
+          paused={false}
+          options={{
+            height: 30, 
+            amplitude: 10, 
+            speed: 0.2,
+            points: 3,
+          }}
+        >
+          <defs>
+      <linearGradient id="hero-to-beta-gradient" gradientTransform="rotate(90)">
+        <stop offset="0%" stopColor="#6B46C1" /> {/* Purple from HeroLaunchSection */}
+        <stop offset="100%" stopColor="#4B0082" /> {/* Darker purple for JoinBetaSection */}
+      </linearGradient>
+    </defs>
+        </Wavify>
+      </div>
     </section>
   );
 }

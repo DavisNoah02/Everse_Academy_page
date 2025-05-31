@@ -146,7 +146,7 @@ export default function CoursesSection() {
   const [activeTab, setActiveTab] = useState('free');
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-600 to-blue-50/30">
+    <section className="py-20 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-200">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <motion.div
@@ -196,7 +196,7 @@ export default function CoursesSection() {
               <motion.button
                 className={`px-8 py-3 rounded-xl font-semibold transition-all flex items-center space-x-2 ${
                   activeTab === 'premium'
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-green-400 to-cyan-600 text-white shadow-lg'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
                 onClick={() => setActiveTab('premium')}
@@ -231,20 +231,29 @@ export default function CoursesSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <div className="bg-slate-400 text-gray-800 rounded-2xl p-8 shadow-lg max-w-2xl mx-auto border border-gray-200">
+          <div className="bg-gradient-to-r from-purple-500 via-blue-600 to-cyan-500 text-gray-600 rounded-2xl p-8 shadow-lg max-w-2xl mx-auto border border-gray-200">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Can't find what you're looking for?
             </h3>
             <p className="text-gray-900 mb-6">
               We're constantly adding new courses. Request a specific topic and we'll prioritize it.
             </p>
-            <motion.button
-              className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+            <div className="flex flex-row justify-center gap-4">
+              <motion.button
+              className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all hover:border hover:border-gray-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-            >
+              >
               Request a Course
-            </motion.button>
+              </motion.button>
+              <motion.button
+              className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:border hover:border-gray-200 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              >
+              View All
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       </div>
