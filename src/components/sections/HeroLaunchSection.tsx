@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Clock, Sparkles, Code, Users, Trophy } from "lucide-react";
-import Wavify from "react-wavify";
+// import Wavify from "react-wavify";
 
 // Animated particles component
 function AnimatedParticles() {
@@ -197,7 +197,7 @@ function ProfileStack() {
           transition={{ delay: 2.3 }}
         >
           <p className="text-white/90 text-sm md:text-base font-medium">
-            Join  learners
+            Join  Other +99 learners
           </p>
           <p className="text-white/60 text-xs md:text-sm">
             Already subscribed for launch updates
@@ -248,19 +248,25 @@ export default function HeroLaunchSection() {
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-slate-800 via-purple-900 to-slate-700 flex items-center justify-center overflow-hidden">
       {/* Academy Logo/Heading */}
-      <motion.div
-        className="absolute top-6 left-6 z-20"
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-3 shadow-2xl">
-          <h2 className="text-white font-bold text-lg md:text-xl">
-            E-verse Academy
-            <span className="block text-sm font-medium text-purple-300">Kenya</span>
-          </h2>
-        </div>
-      </motion.div>
+        <motion.div
+            className="absolute top-6 left-6 z-20"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            whileHover={{
+              rotate: [0, 2, -2, 2, -2, 0],  // shaky rotation
+              scale: 1.03,
+              transition: { duration: 0.4, repeat: 0, ease: "easeInOut" }
+            }}
+          >
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-3 shadow-2xl">
+              <h2 className="text-white font-bold text-lg md:text-xl">
+                E-verse Academy
+                <span className="block text-sm font-medium text-purple-300">Kenya</span>
+              </h2>
+            </div>
+        </motion.div>
+
 
       {/* Enhanced background layers */}
       <motion.div 
@@ -354,10 +360,10 @@ export default function HeroLaunchSection() {
         </div>
       </motion.div>
 
-      {/* Wavy Bottom Border */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+     
+      {/* <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
         <Wavify
-          fill="url(#2E2F32)" // Use a gradient for smoother blending
+          fill="url(#2E2F32)" 
           paused={false}
           options={{
             height: 30, 
@@ -368,12 +374,13 @@ export default function HeroLaunchSection() {
         >
           <defs>
       <linearGradient id="hero-to-beta-gradient" gradientTransform="rotate(90)">
-        <stop offset="0%" stopColor="#6B46C1" /> {/* Purple from HeroLaunchSection */}
-        <stop offset="100%" stopColor="#4B0082" /> {/* Darker purple for JoinBetaSection */}
+        <stop offset="0%" stopColor="#6B46C1" /> 
+        <stop offset="100%" stopColor="#4B0082" /> 
       </linearGradient>
     </defs>
         </Wavify>
-      </div>
+      </div> */}
+      
     </section>
   );
 }
