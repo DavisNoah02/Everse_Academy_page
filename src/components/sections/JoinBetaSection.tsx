@@ -19,7 +19,7 @@ const betaSteps = [
 
 export default function JoinBetaSection() {
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-200">
+    <section className="py-20 bg-gradient-to-br from-blue-100 to-blue-300 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-200">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <motion.div
@@ -132,7 +132,7 @@ export default function JoinBetaSection() {
           viewport={{ once: true }}
         >
           <div className="relative max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-purple-500 via-blue-600 to-cyan-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <div className="bg-gradient-to-r from-purple-700 via-blue-600 to-cyan-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <Users className="w-6 h-6" />
                 <span className="text-purple-200">Join Other beta applicants</span>
