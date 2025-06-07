@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { HelpCircle } from "lucide-react";
+
 
 const faqs = [
   {
@@ -48,11 +50,14 @@ export default function FAQsSection() {
   );
 
   return (
-    <section className="bg-slate-800 text-white py-12">
+    <section className="bg-gradient-to-r from-purple-700 via-gray-500 to-cyan-800 text-white py-12">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-4 text-purple-400">
-          Frequently Asked Questions
-        </h2>
+        <div className="flex items-center justify-center">
+          <HelpCircle size={40} className="text-green-400 mr-4" />
+          <h2 className="text-3xl font-bold text-center mb-4">
+            Frequently Asked Questions
+          </h2>
+        </div>
         <p className="text-center text-slate-300 mb-6">
           Find quick answers to common questions about Everse Academy.
         </p>

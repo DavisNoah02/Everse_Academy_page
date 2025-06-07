@@ -47,10 +47,8 @@ const supportLinks = [
 export default function Footer() {
   return (
     <>
-      
-
       {/* Footer */}
-      <footer className="bg-slate-700 text-white relative overflow-hidden">
+      <footer className="bg-gradient-to-r from-purple-800 via-gray-700 to-cyan-800 py-4 text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 opacity-50 h-full" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(66, 119, 203, 0.05),transparent_50%)]" />
@@ -141,10 +139,11 @@ export default function Footer() {
             transition={{ delay: 0.5 }}
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-slate-400 text-center md:text-left"> <span className="ml-2">Made with ❤️ by noa.dave</span></p>
               <p className="text-slate-400 text-center md:text-left">
                 &copy; {new Date().getFullYear()} Everse Academy Kenya. All rights reserved.
-                <span className="ml-2">Made with ❤️ by Noah Tech</span>
               </p>
+              
               <div className="flex gap-6 text-sm text-slate-400">
                 <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
                 <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>

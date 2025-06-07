@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ export default function NewsletterSection() {
   }, [message]);
 
   return (
-    <section className="bg-gradient-to-r from-purple-800 via-gray-500 to-cyan-800 text-white rounded-md p-6 shadow-lg">
+    <section className="bg-gradient-to-r from-purple-700 via-gray-500 to-cyan-800 text-white py-12 p-6 shadow-lg">
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Heading + Description */}
         <div className="text-center sm:text-left">
@@ -57,10 +58,12 @@ export default function NewsletterSection() {
             required
             className="flex-1 px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={isLoading || isSubscribed}
-            className={` hover:cursor-pointer px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 ${
+            className={` bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-500 border border-purple-400/20 hover:cursor-pointer ${
               isSubscribed
                 ? "bg-green-600 cursor-default text-white"
                 : isLoading
@@ -74,7 +77,7 @@ export default function NewsletterSection() {
               ? "Subscribed ✅"
               : "Subscribe"}
             {!isLoading && !isSubscribed && <span className="ml-2">→</span>}
-          </button>
+          </motion.button>
         </form>
 
         {/* Message */}

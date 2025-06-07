@@ -17,14 +17,12 @@ const routes = [
     path: "/",
     element: (
       <>
-        
         <HeroLaunchSection />
         <JoinBetaSection />
         <WhyPlatformSection />
         <CoursesShowcaseSection />
-        <FAQsSection />
          <NewsletterSection />
-         
+         <FAQsSection />
         <Footer />
       </>
     ),

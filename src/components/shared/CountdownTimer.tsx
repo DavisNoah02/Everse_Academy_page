@@ -19,7 +19,7 @@ export default function CountdownTimer() {
   useEffect(() => {
     // Set launch date to 60 days from now
     const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 60);
+    launchDate.setDate(launchDate.getDate() + 90);
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
