@@ -5,6 +5,7 @@ import ProfileStack from "../shared/profilestack";
 import CountdownTimer from "../shared/CountdownTimer";
 import AnimatedParticles from "../shared/AnimatedParticles";
 import Grid3D from "../shared/3DGrid";
+import { useTheme } from "@/components/themeProvider";
 
 // import Wavify from "react-wavify";
 
@@ -45,10 +46,15 @@ export default function HeroLaunchSection() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, 100]);
   const y2 = useTransform(scrollY, [0, 300], [0, 50]);
+  const { theme } = useTheme();
 
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-800 via-purple-800 to-slate-700 flex items-center justify-center overflow-hidden">
+    <section
+      className={`relative min-h-screen py-12 px-6 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-600 text-black"
+      }`}
+    >
       {/* Academy Logo/Heading */}
         <motion.div
             className="absolute top-6 left-6 z-20"
@@ -102,15 +108,15 @@ export default function HeroLaunchSection() {
           <span className="text-white/90 text-sm font-medium">Kenya's Premier Tech Academy</span>
         </motion.div>
 
-        <motion.h1
-          className="text-4xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200 leading-tight mb-4"
+        <motion.h2
+          className="text-4xl md:text-6xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200 leading-tight mb-4"
         >
           Learn. Grow.
           <br />
           <span className="text-gradient bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Dominate.
           </span>
-        </motion.h1>
+        </motion.h2>
 
         <motion.p
           className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-8 max-w-4xl mx-auto font-light leading-relaxed"

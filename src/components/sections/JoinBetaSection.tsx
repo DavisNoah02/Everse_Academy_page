@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/themeProvider";
 import { Rocket, Check, Star, Target, Users, Gift, Zap } from "lucide-react";
 
 const betaBenefits = [
@@ -18,8 +19,13 @@ const betaSteps = [
 ];
 
 export default function JoinBetaSection() {
+  const { theme } = useTheme();
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-100 to-blue-300 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-200">
+    <section
+      className={`py-12 px-6 ${
+        theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-700 text-black"
+      }`}
+    >
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header */}
         <motion.div
@@ -29,15 +35,15 @@ export default function JoinBetaSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center space-x-2 bg-purple-200 dark:bg-purple-900/30 rounded-full px-4 py-2 mb-4">
+          <div className="inline-flex items-center space-x-2 bg-purple-200 dark:bg-purple-00/30 rounded-full px-4 py-2 mb-4">
             <Star className="w-4 h-4 text-purple-700" />
             <span className="text-purple-600 text-sm font-medium">Limited Beta Access</span>
           </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-5">
-            <Rocket className="w-8 h-10 py-1 text-purple-700" />
-            Join Our <span className="text-gradient bg-gradient-to-r from-purple-900 to-blue-600 bg-clip-text text-transparent">Beta Program</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-5">
+            <Rocket className="w-8 h-10 py-1 text-purple-600" />
+            Join Our <span className="text-gradient bg-gradient-to-r from-purple-800 to-blue-600 bg-clip-text text-transparent">Beta Program</span>
             </h2>
-          <p className="text-xl text-gray-500 dark:text-gray-300 max-w-3xl mx-auto py-3">
+          <p className="text-xl text-gray-400 dark:text-gray-100 max-w-3xl mx-auto py-3">
             Be among the first 100 learners to experience Kenya's most innovative tech academy
           </p>
         </motion.div>
@@ -52,7 +58,7 @@ export default function JoinBetaSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-purple-200/50 dark:border-purple-800/50 h-full">
+            <div className="bg-gray-100/60 dark:bg-gray-900/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-purple-200/50 dark:border-purple-800/50 h-full">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
                   <Gift className="w-6 h-6 text-white" />
@@ -130,31 +136,33 @@ export default function JoinBetaSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           viewport={{ once: true }}
+          style={{ overflow: "visible" }}
         >
           <div className="relative max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-purple-700 via-blue-600 to-cyan-800 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <div className="bg-gradient-to-r from-blue-600/20 to-emerald-600/20 rounded-3xl p-10 border border-blue-400/30 text-white shadow-2xl">
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <Users className="w-6 h-6" />
                 <span className="text-purple-200">Join Other beta applicants</span>
               </div>
               
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">Ready to Shape the Future?</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to Shape the Future?</h3>
               <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
                 Limited spots available. Apply now and become part of Kenya's tech revolution.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.button
-                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
+                  className="relative z-10 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 hover:cursor-pointer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open("https://forms.gle/your-google-form-link", "_blank")}
                 >
-                  <Zap className="w-5 h-5" />
+                  <Zap className="w-4 h-5" />
                   <span>Apply for Beta Access</span>
                 </motion.button>
                 
                 <motion.button
-                  className="border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg backdrop-blur-sm hover:bg-white/10 transition-all"
+                  className="relative z-10 border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all hover:cursor-pointer"	
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -164,7 +172,7 @@ export default function JoinBetaSection() {
             </div>
             
             {/* Glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-3xl blur-xl opacity-30 -z-10"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-3xl blur-xl opacity-30 -z-20"></div>
           </div>
         </motion.div>
       </div>

@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-// import Wavify from "react-wavify";
+import FloatingModeToggle from "@/components/shared/FloatingModeToggle";
 import HeroLaunchSection from "@/components/sections/HeroLaunchSection";
 import JoinBetaSection from "@/components/sections/JoinBetaSection";
 import NewsletterSection from "@/components/layout/NewsLetter";
@@ -16,13 +16,14 @@ const routes = [
   {
     path: "/",
     element: (
-      <>
+      <> 
+        <FloatingModeToggle />
         <HeroLaunchSection />
         <JoinBetaSection />
         <WhyPlatformSection />
         <CoursesShowcaseSection />
-         <NewsletterSection />
-         <FAQsSection />
+        <NewsletterSection />
+        <FAQsSection />
         <Footer />
       </>
     ),

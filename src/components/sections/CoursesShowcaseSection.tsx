@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Code, Palette, TrendingUp, Star, Zap, Sparkles, Crown } from "lucide-react";
+import { useTheme } from "@/components/themeProvider";
 
 const freeCourses = [
   {
@@ -126,10 +127,10 @@ function CourseCard({ course, index, isPremium = false }: CourseCardProps) {
       </div>
 
       {/* Title & Description */}
-      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-900 transition-colors duration-300">
+      <h3 className="text-xl font-semibold text-white-900 mb-3 group-hover:text-blue-900 transition-colors duration-300">
       {course.title}
       </h3>
-      <p className="text-gray-600 text-sm mb-6 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+      <p className="text-white-700 text-sm mb-6 leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
       {course.description}
       </p>
 
@@ -143,7 +144,7 @@ function CourseCard({ course, index, isPremium = false }: CourseCardProps) {
         {course.learnings.map((learning, idx) => (
         <motion.div 
           key={idx} 
-          className="flex items-start text-gray-600 group-hover:text-gray-700 transition-colors duration-300"
+          className="flex items-start text-gray-500 group-hover:text-gray-700 transition-colors duration-300"
           initial={{ opacity: 0, x: -10 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.05 + idx * 0.03 }}
@@ -171,9 +172,14 @@ function CourseCard({ course, index, isPremium = false }: CourseCardProps) {
 
 export default function CoursesSection() {
   const [activeTab, setActiveTab] = useState('free');
+   const { theme } = useTheme();
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50 overflow-hidden">
+    <section
+      className={`py-12 px-6 ${
+        theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-300 text-black"
+      }`}
+    >
       {/* Background elements */}
       <div className="absolute inset-0">
         {/* Subtle geometric patterns */}
@@ -206,7 +212,7 @@ export default function CoursesSection() {
             <span className="text-blue-700 text-sm font-medium">Course Catalog</span>
           </motion.div>
           
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Explore Our{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Courses
