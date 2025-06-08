@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HelpCircle } from "lucide-react";
-
+import { useTheme } from "@/components/themeProvider";
 
 const faqs = [
   {
@@ -43,6 +43,7 @@ const faqs = [
 
 export default function FAQsSection() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { theme } = useTheme();
 
   // Filter FAQs based on the search query
   const filteredFaqs = faqs.filter((faq) =>
@@ -50,7 +51,10 @@ export default function FAQsSection() {
   );
 
   return (
-    <section className="bg-gradient-to-r from-purple-700 via-gray-500 to-cyan-800 text-white py-12">
+    <section className={`relative min-h-screen py-12 px-6 ${
+        theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-700 text-black"
+      }`}
+    >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-center">
           <HelpCircle size={40} className="text-green-400 mr-4" />
