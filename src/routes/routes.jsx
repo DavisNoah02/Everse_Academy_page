@@ -8,9 +8,11 @@ import CoursesShowcaseSection from "@/components/sections/CoursesShowcaseSection
 import FAQsSection from "@/components/sections/FAQs_Section";
 import Footer from "@/components/layout/Footer";
 
-const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
-const TermsPage = lazy(() => import("@/pages/TermsPage"));
-const CookiesPage = lazy(() => import("@/pages/CookiesPage"));
+
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPage"));
+const Terms = lazy(() => import("@/pages/TermsPage"));
+const Cookies = lazy(() => import("@/pages/CookiesPage"));
+const AboutUs = lazy(() => import("@/pages/AboutUsPage"));
 
 const routes = [
   {
@@ -22,15 +24,16 @@ const routes = [
         <JoinBetaSection />
         <WhyPlatformSection />
         <CoursesShowcaseSection />
-        <NewsletterSection />
         <FAQsSection />
+        <NewsletterSection />
         <Footer />
       </>
     ),
   },
-  { path: "/privacy", element: <PrivacyPage /> },
-  { path: "/terms", element: <TermsPage /> },
-  { path: "/cookies", element: <CookiesPage /> },
+  { path: "/PrivacyPolicy", element: <PrivacyPolicy /> },
+  { path: "/Terms", element: <Terms /> },
+  { path: "/Cookies", element: <Cookies /> },
+  { path: "/AboutUs", element: <AboutUs /> },
 ];
 
 export default routes;

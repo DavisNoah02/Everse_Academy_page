@@ -1,4 +1,4 @@
-export default function CookiesPage() {
+export default function Cookies() {
   return (
     <div className="container mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold mb-6">Cookies Policy</h1>

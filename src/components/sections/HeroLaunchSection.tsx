@@ -51,8 +51,8 @@ export default function HeroLaunchSection() {
 
   return (
     <section
-      className={`relative min-h-screen py-12 px-6 ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-600 text-black"
+      className={`relative min-h-screen flex items-center justify-center overflow-hidden py-8    ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-600 "
       }`}
     >
       {/* Academy Logo/Heading */}
@@ -75,6 +75,7 @@ export default function HeroLaunchSection() {
               </h2>
             </div>
         </motion.div>
+        
       {/* Enhanced background layers */}
       <motion.div 
         className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-slate-900/50 to-pink-900/30"
@@ -85,12 +86,9 @@ export default function HeroLaunchSection() {
       <Grid3D />
        
        {/* Animated Particles */}
-      <AnimatedParticles />
+      {/* <AnimatedParticles /> */}
       
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"
-        style={{ y: y2 }}
-      />
+      
       <motion.div
         className="relative z-10 text-center px-6 max-w-6xl mx-auto"
         initial={{ opacity: 0, y: 80 }}
@@ -99,7 +97,7 @@ export default function HeroLaunchSection() {
       >
         {/* Enhanced typography */}
         <motion.div
-          className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 py-2 mb-6"
+          className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-2 py-2 mb-6"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
@@ -149,11 +147,11 @@ export default function HeroLaunchSection() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 backdrop-blur-lg rounded-full px-8 py-4 shadow-2xl font-semibold text-lg flex items-center space-x-2">
+            <div className="bg-gradient-to-r from-purple-700 to-pink-400 text-white border-0 backdrop-blur-lg rounded-full px-8 py-4 shadow-2xl font-semibold text-lg flex items-center space-x-2">
               <Clock className="w-5 h-5" />
               <span>Launching Soon</span>
             </div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity -z-10"></div>
+      
           </motion.div>
         </motion.div>
 
