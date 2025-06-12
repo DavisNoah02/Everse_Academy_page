@@ -38,9 +38,10 @@ const quickLinks = [
 ];
 
 const supportLinks = [
-  { name: "Help Center", href: "/help" },
+  
   { name: "Contact Us", href: "/contact" },
-  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Privacy Policy", href: "/privacyPolicy" },
+  { name: "Cookies Policy", href: "/cookies" },
   { name: "Terms of Service", href: "/terms" }
 ];
 

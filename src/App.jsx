@@ -1,10 +1,13 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "@/components/themeProvider"; 
-import routes from "./routes/routes";
+import { ThemeProvider } from "@/components/themeProvider";
 import { Theme as RadixTheme } from "@radix-ui/themes";
+import { Analytics } from "@vercel/analytics/react"; // Import Vercel Analytics
+import routes from "./routes/routes";
 import "./App.css";
-import "@radix-ui/themes/styles.css"; // IMPORTANT: include this for Radix theme styling
+import "@radix-ui/themes/styles.css";
+
+
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
               ))}
             </Routes>
           </Suspense>
+          <Analytics /> {/*  Analytics here */}
         </Router>
       </RadixTheme>
     </ThemeProvider>

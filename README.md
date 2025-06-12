@@ -14,34 +14,26 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ## Project Structure
 
-src/
-├── components/
-│   ├── layout/
-│   │   ├── Footer.tsx
-│   │   └── NewsletterForm.tsx
-│   ├── sections/
-│   │   ├── HeroLaunchSection.tsx
-│   │   ├── JoinBetaSection.tsx
-│   │   ├── WhyPlatformSection.tsx
-│   │   ├── CoursesShowcaseSection.tsx
-│   ├── shared/
-│   │   ├── CountdownTimer.tsx
-│   │   └── SectionHeader.tsx
-│   └── icons/
-│       └── SocialIcons.tsx
-│
-├── pages/
-│   └── LandingPage.tsx
-│
-├── data/
-│   └── courses.ts
-│   └── features.ts
-│   └── betaSteps.ts
-│
-├── hooks/
-│   └── useCountdown.ts (optional, for reusability)
-│
-├── App.tsx
-└── main.tsx
+Everse_Academy/
+├── public/                     # Static assets like images, fonts, etc.
+├── src/                        # Main source code
+│   ├── components/             # Reusable UI components
+│   │   ├── layout/             # Layout components (e.g., Header, Footer)
+│   │   ├── sections/           # Page-specific sections (e.g., JoinBetaSection)
+│   │   ├── shared/             # Shared components (e.g., CountdownTimer, Modal)
+│   │   ├── ui/                 # Low-level UI components (e.g., buttons, dropdowns)
+│   ├── data/                   # Static data (e.g., betaSteps, betaBenefits)
+│   ├── pages/                  # Page components (e.g., HomePage, PrivacyPage)
+│   ├── styles/                 # Global and component-specific styles
+│   ├── utils/                  # Utility functions (e.g., helpers, API calls)
+│   ├── App.tsx                 # Main application entry point
+│   ├── index.tsx               # React DOM rendering entry point
+│   ├── themeProvider.tsx       # Theme context provider
+│   ├── routes/                 # Route definitions
+│   └── assets/                 # Project-specific assets (e.g., icons, logos)
+├── package.json                # Project dependencies and scripts
+├── tsconfig.json               # TypeScript configuration
+├── README.md                   # Project documentation
+└── .gitignore                  # Git ignore file
 
 

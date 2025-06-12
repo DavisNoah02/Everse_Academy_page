@@ -1,359 +1,316 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Zap, 
-  Target, 
-  MapPin, 
-  Award, 
-  Briefcase, 
-  Users, 
-  BookOpen, 
-  Search, 
-  Clock, 
+"use client"
+
+import { motion } from "framer-motion"
+import {
+  Search,
+  Clock,
+  BookOpen,
+  Target,
+  PlayCircle,
+  Award,
+  Briefcase,
   CheckCircle,
   X,
-  Youtube,
-  Github,
-  Chrome,
   ArrowRight,
   Sparkles,
-  PlayCircle
-} from "lucide-react";
-import { useTheme } from "@/components/themeProvider";
+  Users,
+  Code,
+  Trophy,
+} from "lucide-react"
 
-const problemPoints = [
+const problems = [
   {
     icon: Search,
     title: "Endless Searching",
-    description: "Hours wasted finding the right tutorials across multiple platforms",
-    platforms: ["YouTube", "StackOverflow", "Medium", "Reddit"]
+    description:
+      "You spend hours jumping between YouTube, Stack Overflow, and random blogs trying to find the right tutorial for your skill level.",
   },
   {
     icon: Clock,
     title: "Outdated Content",
-    description: "Following tutorials from 2018 that no longer work with current technology",
-    platforms: ["Old Blogs", "Deprecated Docs", "Legacy Courses"]
+    description:
+      "You follow a tutorial from 2018 only to discover the framework has completely changed and nothing works anymore.",
   },
   {
     icon: BookOpen,
     title: "Fragmented Learning",
-    description: "Jumping between different teaching styles with no clear progression path",
-    platforms: ["FreeCodeCamp", "W3Schools", "Random Tutorials"]
+    description:
+      "You learn HTML from one source, CSS from another, and JavaScript from a third - with no connection between them.",
   },
   {
     icon: Target,
     title: "No Clear Direction",
-    description: "Learning random skills without a roadmap to your career goals",
-    platforms: ["Scattered Resources", "No Structure", "Confusion"]
-  }
-];
+    description: "You're learning random skills without knowing if they'll actually help you land the job you want.",
+  },
+]
 
-const solutionPath = [
+const learningPath = [
   {
     icon: PlayCircle,
     title: "Learn Fundamentals",
-    description: "Start with solid foundations using our structured curriculum",
-    color: "from-purple-500 to-indigo-500",
-    step: 1
+    description: "Master web development basics with our structured curriculum.",
+    color: "from-purple-500 to-purple-600",
+    bgColor: "bg-purple-500",
+    step: 1,
+    side: "left",
   },
   {
     icon: Target,
-    title: "Build Real Projects", 
-    description: "Apply your skills on industry-relevant projects with guidance",
-    color: "from-blue-500 to-cyan-500",
-    step: 2
+    title: "Build Real Projects",
+    description: "Apply your skills on industry-relevant portfolio projects.",
+    color: "from-blue-500 to-blue-600",
+    bgColor: "bg-blue-500",
+    step: 2,
+    side: "right",
   },
   {
     icon: Award,
     title: "Get Certified",
-    description: "Earn recognized certifications that validate your expertise",
-    color: "from-emerald-500 to-teal-500", 
-    step: 3
+    description: "Earn recognized certifications that validate your expertise.",
+    color: "from-emerald-500 to-emerald-600",
+    bgColor: "bg-emerald-500",
+    step: 3,
+    side: "left",
   },
   {
     icon: Briefcase,
     title: "Land Your Job",
-    description: "Connect with our hiring partners and launch your tech career",
-    color: "from-amber-500 to-orange-500",
-    step: 4
-  }
-];
+    description: "Connect with hiring partners and launch your tech career.",
+    color: "from-orange-500 to-orange-600",
+    bgColor: "bg-orange-500",
+    step: 4,
+    side: "right",
+  },
+]
 
-const FloatingPlatforms = () => {
-  const platforms = [
-    { name: "YouTube", icon: Youtube, color: "text-red-500", delay: 0 },
-    { name: "GitHub", icon: Github, color: "text-gray-600", delay: 0.5 },
-    { name: "StackOverflow", icon: Chrome, color: "text-orange-500", delay: 1 },
-    { name: "Reddit", icon: Chrome, color: "text-orange-600", delay: 1.5 },
-    { name: "Medium", icon: BookOpen, color: "text-green-600", delay: 2 }
-  ];
-
-  return (
-    <div className="relative w-full h-64 flex items-center justify-center">
-      {/* Tangled lines representing confusion */}
-      <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 1 }}>
-        <motion.path
-          d="M50,100 Q150,50 250,120 T450,80 Q500,140 400,180 T200,200 Q100,160 50,100"
-          stroke="rgba(156, 163, 175, 0.3)"
-          strokeWidth="2"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-        />
-        <motion.path
-          d="M100,80 Q200,140 350,60 T500,120 Q450,180 300,150 T150,190"
-          stroke="rgba(156, 163, 175, 0.2)"
-          strokeWidth="1.5"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2.5, delay: 0.5, ease: "easeInOut" }}
-        />
-      </svg>
-      
-      {/* Floating platform icons */}
-      {platforms.map((platform, idx) => {
-        const PlatformIcon = platform.icon;
-        return (
-          <motion.div
-            key={platform.name}
-            className={`absolute bg-white rounded-lg p-3 shadow-lg border border-gray-200 ${platform.color}`}
-            style={{
-              left: `${20 + (idx * 15)}%`,
-              top: `${30 + (idx % 2 === 0 ? 0 : 40)}%`,
-              zIndex: 10
-            }}
-            initial={{ opacity: 0, scale: 0, rotate: -180 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              rotate: 0,
-              y: [0, -10, 0]
-            }}
-            transition={{ 
-              duration: 0.8,
-              delay: platform.delay,
-              y: {
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }
-            }}
-          >
-            <PlatformIcon className="w-6 h-6" />
-          </motion.div>
-        );
-      })}
-      
-      {/* Confused learner in center */}
-      <motion.div
-        className="relative z-20 bg-gray-800 text-white rounded-full p-4 shadow-xl"
-        animate={{ rotate: [0, -10, 10, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <Users className="w-8 h-8" />
-      </motion.div>
-    </div>
-  );
-};
-
-const LearningPath = () => {
-  return (
-    <div className="relative">
-      {/* Connecting line */}
-      <div className="absolute left-1/2 top-8 bottom-8 w-1 bg-gradient-to-b from-purple-400 via-blue-400 via-emerald-400 to-orange-400 transform -translate-x-1/2 rounded-full" />
-      
-      <div className="space-y-12">
-        {solutionPath.map((step, idx) => {
-          const StepIcon = step.icon;
-          return (
-            <motion.div
-              key={step.title}
-              className="relative flex items-center"
-              initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: idx * 0.2 }}
-              viewport={{ once: true }}
-            >
-              {/* Step circle */}
-              <div className="relative flex items-center justify-center w-16 h-16 mx-auto">
-                <div className={`absolute inset-0 bg-gradient-to-r ${step.color} rounded-full shadow-lg`} />
-                <div className="relative bg-white rounded-full p-2 shadow-sm">
-                  <StepIcon className="w-6 h-6 text-gray-700" />
-                </div>
-                {/* Step number */}
-                <div className="absolute -top-2 -right-2 bg-white border-2 border-gray-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-gray-600">
-                  {step.step}
-                </div>
-              </div>
-              
-              {/* Content */}
-              <div className={`absolute ${idx % 2 === 0 ? 'right-full mr-8' : 'left-full ml-8'} w-64`}>
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/60">
-                  <h4 className="font-bold text-gray-900 mb-2">{step.title}</h4>
-                  <p className="text-gray-600 text-sm">{step.description}</p>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
+const successMetrics = [
+  { label: "Structured Curriculum", icon: BookOpen },
+  { label: "Hands-on Projects", icon: Code },
+  { label: "Industry Certifications", icon: Trophy },
+  { label: "Career Placement", icon: Users },
+]
 
 export default function WhySkillKenya() {
-  const [activeTab, setActiveTab] = useState('problem');
-  const { theme } = useTheme();
-
   return (
-    <section className={`relative py-24 ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-700 text-black"} overflow-hidden`}>
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl" />
-      </div>
+    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.1),transparent_50%)] pointer-events-none" />
 
-      <div className="relative container mx-auto px-6 max-w-7xl">
-        {/* Header */}
+      <div className="container mx-auto px-6 max-w-6xl relative">
+        {/* Header - Left aligned */}
         <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          className="text-left mb-16"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <motion.div 
-            className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm 
-                      border border-white/20 rounded-full px-6 py-3 mb-8"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <span className="text-blue-300 text-sm font-semibold">The Problem & Solution</span>
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Why{" "}
+          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
+            <Sparkles className="w-4 h-4 text-blue-400" />
+            <span className="text-blue-300 text-sm font-medium">Your Learning Journey</span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Why Choose{" "}
             <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
               E-verse Academy?
             </span>
           </h2>
-          
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Transform your learning journey from chaos to clarity with Kenya's first comprehensive tech education platform
+
+          <p className="text-xl text-slate-300 max-w-3xl">
+            Stop wasting time on scattered tutorials and outdated content. Join thousands of students who've transformed
+            their careers with our proven learning system.
           </p>
         </motion.div>
 
-        {/* Comparison Cards */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-20">
-          {/* Without E-verse Academy */}
+        {/* Main comparison */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-10">
+          {/* Problems - Left aligned content */}
           <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: -50 }}
+            className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50"
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50 h-full">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mr-4">
-                  <X className="w-6 h-6 text-red-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-200">
-                  Without <span className="text-red-400">E-verse Academy</span>
-                </h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
+                <X className="w-5 h-5 text-red-400" />
               </div>
-              
-              <p className="text-slate-300 mb-8 leading-relaxed">
-                Endless scattered tutorials. Navigating outdated lessons. Lost amidst overwhelming coding content with no clear direction.
-              </p>
+              <h3 className="text-xl font-bold text-red-400">Learning Without Structure</h3>
+            </div>
 
-              <FloatingPlatforms />
+            <p className="text-slate-300 mb-6 text-left">
+              Sound familiar? You're not alone. 87% of self-taught developers struggle with these exact challenges:
+            </p>
 
-              <div className="space-y-4 mt-8">
-                {problemPoints.map((point, idx) => {
-                  const PointIcon = point.icon;
-                  return (
-                    <motion.div
-                      key={point.title}
-                      className="flex items-start space-x-3 p-4 bg-slate-700/30 rounded-xl border border-slate-600/30"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: idx * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <PointIcon className="w-4 h-4 text-red-400" />
-                      </div>
+            <div className="space-y-4">
+              {problems.map((problem, idx) => {
+                const Icon = problem.icon
+                return (
+                  <motion.div
+                    key={problem.title}
+                    className="p-4 bg-slate-700/30 rounded-xl"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: idx * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <Icon className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-slate-200 mb-1">{point.title}</h4>
-                        <p className="text-slate-400 text-sm">{point.description}</p>
+                        <h4 className="font-semibold text-slate-200 mb-2">{problem.title}</h4>
+                        <p className="text-slate-400 text-sm text-left leading-relaxed">{problem.description}</p>
                       </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </div>
           </motion.div>
 
-          {/* With E-verse Academy */}
+          {/* Solutions - Left aligned content */}
           <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 50 }}
+            className="bg-gradient-to-br from-blue-900/30 to-emerald-900/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/30"
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="bg-gradient-to-br from-blue-900/30 to-emerald-900/30 backdrop-blur-sm rounded-3xl p-8 border border-blue-500/30 h-full">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center mr-4">
-                  <CheckCircle className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">
-                  With <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">E-verse Academy</span>
-                </h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-white" />
               </div>
-              
-              <p className="text-slate-200 mb-8 leading-relaxed">
-                Streamlined, structured learning. Dive into current, curated content. Master coding with clarity and confidence at your own pace.
-              </p>
+              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                Learning With E-verse Academy
+              </h3>
+            </div>
 
-              <div className="h-64 flex items-center justify-center">
-                <LearningPath />
-              </div>
+            <p className="text-slate-200 mb-6 text-left">
+              Join over 2,500+ students who've successfully launched their tech careers with our structured approach:
+            </p>
 
-              <div className="mt-8">
-                <div className="bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-2xl p-6 border border-blue-400/30">
-                  <h4 className="font-bold text-white mb-4 flex items-center">
-                    <ArrowRight className="w-5 h-5 mr-2 text-emerald-400" />
-                    Your Clear Path to Success
-                  </h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="flex items-center text-slate-200">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full mr-2" />
-                      Structured Curriculum
+            <div className="space-y-4">
+              {learningPath.map((solution, idx) => {
+                const Icon = solution.icon
+                return (
+                  <motion.div
+                    key={solution.title}
+                    className="p-4 bg-white/5 rounded-xl border border-white/10"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: idx * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`w-8 h-8 ${solution.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}
+                      >
+                        <Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-white mb-2">{solution.title}</h4>
+                        <p className="text-slate-300 text-sm text-left leading-relaxed">{solution.description}</p>
+                      </div>
                     </div>
-                    <div className="flex items-center text-slate-200">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full mr-2" />
-                      Hands-on Projects
-                    </div>
-                    <div className="flex items-center text-slate-200">
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full mr-2" />
-                      Industry Certifications
-                    </div>
-                    <div className="flex items-center text-slate-200">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full mr-2" />
-                      Career Placement
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  </motion.div>
+                )
+              })}
             </div>
           </motion.div>
         </div>
+
+        {/* Vertical Learning Path - Matching the image design */}
+        <motion.div
+          className="mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-left mb-6">
+            <h3 className="text-2xl font-bold mb-2">Your Clear Path to Success</h3>
+            <p className="text-slate-300 max-w-2xl">
+              Our proven 4-step methodology takes you from beginner to employed developer.
+            </p>
+          </div>
+
+          <div className="relative max-w-4xl mx-auto">
+            {/* Vertical connecting line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 via-blue-500 via-emerald-500 to-orange-500 transform -translate-x-1/2 rounded-full" />
+
+            <div className="space-y-8">
+              {learningPath.map((step, idx) => {
+                const Icon = step.icon
+                return (
+                  <motion.div
+                    key={step.title}
+                    className="relative flex items-center"
+                    initial={{ opacity: 0, x: step.side === "left" ? -50 : 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: idx * 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    {/* Step circle */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+                      <div
+                        className={`w-12 h-12 ${step.bgColor} rounded-full flex items-center justify-center shadow-lg border-2 border-slate-800`}
+                      >
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      {/* Step number */}
+                      <div className="absolute -top-1 -right-1 bg-white text-slate-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                        {step.step}
+                      </div>
+                    </div>
+
+                    {/* Content card */}
+                    <div className={`w-72 ${step.side === "left" ? "mr-auto pr-20" : "ml-auto pl-20"}`}>
+                      <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50">
+                        <h4 className="text-lg font-bold text-white mb-2">{step.title}</h4>
+                        <p className="text-slate-300 text-sm text-left leading-relaxed">{step.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Success metrics */}
+          <div className="mt-8 bg-gradient-to-r from-blue-500/10 to-emerald-500/10 rounded-2xl p-4 border border-blue-400/20">
+            <div className="flex items-center gap-2 mb-6">
+              <ArrowRight className="w-5 h-5 text-emerald-400" />
+              <h4 className="text-xl font-bold text-white">What You Get With Our Structured Approach</h4>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {successMetrics.map((metric, idx) => {
+                const Icon = metric.icon
+                return (
+                  <div key={metric.label} className="flex flex-col items-center text-center p-4">
+                    <div
+                      className={`w-12 h-12 ${
+                        idx === 0
+                          ? "bg-purple-500"
+                          : idx === 1
+                            ? "bg-blue-500"
+                            : idx === 2
+                              ? "bg-emerald-500"
+                              : "bg-orange-500"
+                      } rounded-full flex items-center justify-center mb-3`}
+                    >
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-300">{metric.label}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,25 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/themeProvider";
 import { Rocket, Check, Star, Target, Users, Gift, Zap } from "lucide-react";
-
-const betaBenefits = [
-  "Free lifetime access to premium courses",
-  "Direct feedback channel to our development team",
-  "Early access to new features and content",
-  "Exclusive beta tester badge and certificate",
-  "Priority customer support"
-];
-
-const betaSteps = [
-  "Fill out our quick application form",
-  "Complete a brief skills assessment",
-  "Join our beta community on Discord",
-  "Start learning with exclusive content"
-];
+import { betaSteps, betaBenefits } from "@/data/betaSteps";
+import BetaAccessModal from "@/components/shared/BetaAccessModal";
 
 export default function JoinBetaSection() {
   const { theme } = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section
       className={`py-12 px-6 ${
@@ -36,7 +25,7 @@ export default function JoinBetaSection() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center space-x-2 bg-purple-200 dark:bg-purple-00/30 rounded-full px-4 py-2 mb-4">
-            <Star className="w-4 h-4 text-purple-700" />
+            <Star className="w-6 h-6 text-purple-700" />
             <span className="text-purple-600 text-sm font-medium">Limited Beta Access</span>
           </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-5">
@@ -48,86 +37,62 @@ export default function JoinBetaSection() {
           </p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
-          {/* Benefits Card */}
-          <motion.div
-            className="relative group"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <div className="bg-gray-100/60 dark:bg-gray-900/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-purple-200/50 dark:border-purple-800/50 h-full">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
-                  <Gift className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Exclusive Benefits</h3>
-                  <p className="text-gray-600 dark:text-gray-300">What you'll get as a beta tester</p>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                {betaBenefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center space-x-3 p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200/50 dark:border-green-800/50"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Check className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Steps Card */}
-          <motion.div
-            className="relative group"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-blue-200/50 dark:border-blue-800/50 h-full">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center">
-                  <Target className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Simple Process</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Get started in 4 easy steps</p>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                {betaSteps.map((step, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex items-center space-x-4 p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-200/50 dark:border-blue-800/50"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">
-                      {index + 1}
-                    </div>
-                    <span className="text-gray-700 dark:text-gray-300">{step}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+       {/* Main Content Grid */}
+<div className="grid lg:grid-cols-2 gap-6 mb-12">
+  {/* Benefits Card */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    viewport={{ once: true }}
+  >
+    <div className="bg-gray-400 dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 h-full">
+      <div className="flex items-center space-x-3 mb-5">
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <Gift className="w-4 h-4 text-white" />
         </div>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Beta Benefits</h3>
+      </div>
+      
+      <div className="space-y-3">
+        {betaBenefits.map((benefit, index) => (
+          <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
+            <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
+            <span className="text-gray-700 dark:text-gray-300 text-sm">{benefit}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </motion.div>
+
+  {/* Steps Card */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: 0.1 }}
+    viewport={{ once: true }}
+  >
+    <div className="bg-gray-400 dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 h-full">
+      <div className="flex items-center space-x-3 mb-5">
+        <div className="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center">
+          <Target className="w-4 h-4 text-white" />
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Getting Started</h3>
+      </div>
+      
+      <div className="space-y-3">
+        {betaSteps.map((step, index) => (
+          <div key={index} className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
+            <div className="w-6 h-6 bg-gray-600 text-white rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">
+              {index + 1}
+            </div>
+            <span className="text-gray-700 dark:text-gray-300 text-sm">{step}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </motion.div>
+</div>
 
         {/* CTA Section */}
         <motion.div
@@ -138,44 +103,44 @@ export default function JoinBetaSection() {
           viewport={{ once: true }}
           style={{ overflow: "visible" }}
         >
-          <div className="relative max-w-4xl mx-auto">
-            <div className="bg-gradient-to-r from-blue-600/20 to-emerald-600/20 rounded-3xl p-10 border border-blue-400/30 text-white shadow-2xl">
-              <div className="flex items-center justify-center space-x-2 mb-4">
-                <Users className="w-6 h-6" />
-                <span className="text-purple-200">Join Other beta applicants</span>
-              </div>
-              
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to Shape the Future?</h3>
-              <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-                Limited spots available. Apply now and become part of Kenya's tech revolution.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button
-                  className="relative z-10 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 hover:cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open("https://forms.gle/your-google-form-link", "_blank")}
-                >
-                  <Zap className="w-4 h-5" />
-                  <span>Apply for Beta Access</span>
-                </motion.button>
-                
-                <motion.button
-                  className="relative z-10 border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 transition-all hover:cursor-pointer"	
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Learn More
-                </motion.button>
-              </div>
+          <div className="relative max-w-4xl mx-auto bg-gradient-to-r from-gray-700 to-gray-800 rounded-xl p-8 shadow-lg">
+            {/* Join Other Beta Applicants */}
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Users className="w-6 h-6 text-purple-200" />
+              <span className="text-purple-200">Join Other beta applicants</span>
             </div>
-            
-            {/* Glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-3xl blur-xl opacity-30 -z-20"></div>
+
+            <h3 className="text-2xl font-bold text-white mb-4">Ready to Get Started?</h3>
+            <p className="text-sm text-gray-300 mb-6">
+              Join thousands of learners who are already preparing for the future of work in Kenya.
+              Apply now and become part of Kenya's tech revolution.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* Apply for Beta Access Button */}
+              <motion.button
+                className="relative z-40 bg-white text-gray-800 px-6 py-3 rounded-full font-medium text-sm shadow-md hover:shadow-lg transition-all hover:cursor-pointer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsModalOpen(true)}
+              >
+                Apply for Beta Access
+              </motion.button>
+
+              {/* Learn More Button */}
+              <motion.button
+                className="relative z-40  bg-gray-800 text-white px-6 py-3 rounded-full font-medium text-sm shadow-md hover:bg-gray-700 hover:cursor-pointer transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.href = "/AboutUsPage"}
+              >
+                Learn More
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       </div>
+      {/* Modal */}
+      <BetaAccessModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }
