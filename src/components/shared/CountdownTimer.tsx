@@ -15,16 +15,25 @@ export default function CountdownTimer() {
     minutes: 0,
     seconds: 0,
   });
-  const [progress, setProgress] = useState(100); // Progress percentage
+  const [progress, setProgress] = useState(0); // Progress percentage (days passed)
 
   useEffect(() => {
-    // Hardcoded launch date (e.g., 60 days from a specific date)
-    const launchDate = new Date("2025-06-12T00:00:00Z"); 
-    const totalDuration = launchDate.getTime() - new Date().getTime(); 
+    // Check if a launch date already exists in local storage
+    let launchDate = localStorage.getItem("launchDate");
+
+    if (!launchDate) {
+      // If no launch date exists, set it to 60 days from now and save it in local storage
+      const newLaunchDate = new Date();
+      newLaunchDate.setDate(newLaunchDate.getDate() + 60);
+      launchDate = newLaunchDate.toISOString();
+      localStorage.setItem("launchDate", launchDate);
+    }
+
+    const totalDuration = new Date(launchDate).getTime() - new Date().getTime(); // Total countdown duration in milliseconds
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
-      const distance = launchDate.getTime() - now;
+      const distance = new Date(launchDate).getTime() - now;
 
       // Calculate time left
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -34,15 +43,15 @@ export default function CountdownTimer() {
 
       setTimeLeft({ days, hours, minutes, seconds });
 
-      // Calculate progress percentage
-      const remainingPercentage = Math.max((distance / totalDuration) * 100, 0); // Ensure it doesn't go below 0
-      setProgress(remainingPercentage);
+      // Calculate progress percentage (days passed)
+      const elapsedPercentage = Math.min(((totalDuration - distance) / totalDuration) * 100, 100); // Ensure it doesn't exceed 100%
+      setProgress(elapsedPercentage);
 
       // Stop the timer if the countdown is complete
       if (distance < 0) {
         clearInterval(timer);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        setProgress(0); // Set progress to 0 when countdown ends
+        setProgress(100); // Set progress to 100% when countdown ends
       }
     }, 1000);
 
@@ -72,9 +81,9 @@ export default function CountdownTimer() {
       {/* Progress Bar */}
       <div className="w-full max-w-lg bg-gray-700 rounded-full h-2 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 animate-pulse"
-          style={{ width: `${progress}%` }} // Dynamic width based on progress
-          initial={{ width: "100%" }}
+          className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500"
+          style={{ width: `${progress}%` }} // Dynamic width based on days passed
+          initial={{ width: "0%" }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 1, ease: "linear" }}
         />
