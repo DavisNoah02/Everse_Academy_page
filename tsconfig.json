@@ -3,6 +3,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx",
+    "types": ["vite/client"],
+    
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
@@ -13,5 +15,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src", "vite-env.d.ts"],
 }
