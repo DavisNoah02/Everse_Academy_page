@@ -6,7 +6,7 @@ import CountdownTimer from "../shared/CountdownTimer";
 import AnimatedParticles from "../shared/AnimatedParticles";
 import Grid3D from "../shared/3DGrid";
 import { useTheme } from "@/components/themeProvider";
-import LaunchingSoon from "../shared/LaunchingSoon"; // Adjust path if needed
+import LaunchingSoon from "../shared/LaunchingSoon"; 
 
 
 // import Wavify from "react-wavify";
