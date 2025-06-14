@@ -66,8 +66,7 @@ export default function WhySkillKenya() {
           </h2>
 
           <p className="text-xl text-gray-400 dark:text-gray-100 max-w-3xl mx-auto py-3">
-            Stop wasting time on scattered tutorials and outdated content. Join thousands of students who've transformed
-            their careers with our proven learning system.
+             Tired of hopping from tutorial to tutorial? We  give you the structure, mentorship, and skills to actually grow.
           </p>
         </motion.div>
 

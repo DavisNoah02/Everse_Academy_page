@@ -21,7 +21,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-slate-900 text-white px-6 py-14 overflow-hidden">
+    <footer className="relative bg-slate-900 text-white px-8 py-6 overflow-hidden">
       {/* Radial background overlays */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(66,119,203,0.1),transparent_50%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.1),transparent_50%)] pointer-events-none" />
@@ -32,35 +32,43 @@ const Footer = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-10"
+        className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-2"
       >
         {/* Company Info */}
-        <div className="space-y-5">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">
+        <div className="space-y-4">
+          <h2 className="text-3xl text-left font-bold bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">
             Everse Academy Kenya
           </h2>
-          <p className="text-slate-300">
+          <p className="text-left text-md gap-3 text-slate-300">
             Bridging the gap in digital skills through world-class training for future-ready Kenyans.
           </p>
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
+
+          {/* Contact Info: horizontal on small screens, vertical on md+ */}
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2 gap-3">
+            <a
+              href="mailto:everse@gmail.com"
+              className="flex items-center gap-2 text-slate-400 hover:text-white transition"
+            >
               <Mail className="text-blue-400 w-5 h-5" />
               <span>everse@gmail.com</span>
-            </div>
-            <div className="flex items-center gap-3">
+            </a>
+            <a
+              href="tel:+254729239023"
+              className="flex items-center gap-2 text-slate-400 hover:text-white transition"
+            >
               <Phone className="text-emerald-400 w-5 h-5" />
               <span>+254 729 239 023</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <MapPin className="text-purple-400 w-5 h-5" />
+            </a>
+            <div className="flex items-center gap-2 text-slate-300">
+              <MapPin className="text-red-400 w-5 h-5" />
               <span>Nairobi, Kenya</span>
             </div>
           </div>
         </div>
 
         {/* Quick Links */}
-        <div>
-          <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+        <div className=" space-y-4 lg:text-left md:text-center text-center pl-0 md:pl-15">
+          <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">Quick Links</h4>
           <ul className="space-y-2 text-slate-300">
             {["About Us", "Courses", "Instructors", "Blog"].map((item) => (
               <li key={item}>
@@ -73,9 +81,9 @@ const Footer = () => {
         </div>
 
         {/* Support */}
-        <div>
-          <h4 className="text-lg font-semibold mb-4">Support</h4>
-          <ul className="space-y-2 text-slate-300">
+        <div className=" space-y-4 lg:text-left md:text-center text-center">
+          <h4 className=" text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">Support</h4>
+          <ul className=" space-y-2 text-slate-300">
             {["Contact Us", "Privacy Policy", "Cookies Policy", "Terms of Service"].map((item) => (
               <li key={item}>
                 <Link to={`/${item.toLowerCase().replace(/ /g, "")}`} className="hover:text-white transition">
@@ -88,7 +96,7 @@ const Footer = () => {
 
         {/* Newsletter */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">Subscribe</h4>
+          <h4 className="text-lg  font-semibold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">Subscribe</h4>
           <p className="text-slate-300 mb-3">
             Get updates, tips, and offers directly to your inbox.
           </p>
@@ -131,7 +139,7 @@ const Footer = () => {
          <p>
            Built with ❤️ by{" "}
            <a
-             href="https://github.com/noa-dave"
+             href="https://noa-dave.vercel.app/"
              target="_blank"
              rel="noopener"
              className="text-blue-400 hover:underline"

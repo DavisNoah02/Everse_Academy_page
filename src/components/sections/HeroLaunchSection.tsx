@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Clock, Sparkles, Code, Users, Trophy } from "lucide-react";
+import { motion, useScroll, useTransform} from "framer-motion";
+import { Clock,GraduationCap , Sparkles, Code, Users, Trophy } from "lucide-react";
 import ProfileStack from "../shared/profilestack";
 import CountdownTimer from "../shared/CountdownTimer";
 import AnimatedParticles from "../shared/AnimatedParticles";
 import Grid3D from "../shared/3DGrid";
 import { useTheme } from "@/components/themeProvider";
+import LaunchingSoon from "../shared/LaunchingSoon"; // Adjust path if needed
+
 
 // import Wavify from "react-wavify";
 
@@ -55,26 +57,7 @@ export default function HeroLaunchSection() {
         theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-600 "
       }`}
     >
-      {/* Academy Logo/Heading */}
-        <motion.div
-            className="absolute top-6 left-6 z-20"
-            initial={{ opacity: 0, y: -40, scale: 0.8, rotate: -10 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 120, damping: 10, delay: 0.1 }}
-            whileHover={{
-              scale: 1.08,
-              boxShadow: "0 0 32px 8px rgba(168,85,247,0.25)",
-              filter: "brightness(1.15)",
-              transition: { duration: 0.3, ease: "easeOut" }
-            }}
-          >
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-3 shadow-2xl">
-              <h2 className="text-white font-bold text-lg md:text-xl">
-          E-verse Academy
-          <span className="block text-sm font-medium text-purple-300">Kenya</span>
-              </h2>
-            </div>
-        </motion.div>
+      
         
       {/* Enhanced background layers */}
       <motion.div 
@@ -102,8 +85,9 @@ export default function HeroLaunchSection() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <Sparkles className="w-4 h-4 text-yellow-400" />
-          <span className="text-white/90 text-sm font-medium">Kenya's Premier Tech Academy</span>
+          <GraduationCap className="w-6 h-6 text-green-400" />
+          <span className="text-white/90 text-sm font-medium">Everse Tech Academy</span>
+          <GraduationCap className="w-6 h-6 text-green-400" />
         </motion.div>
 
         <motion.h2
@@ -111,7 +95,7 @@ export default function HeroLaunchSection() {
         >
           Learn. Grow.
           <br />
-          <span className="text-gradient bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="text-gradient bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
             Dominate.
           </span>
         </motion.h2>
@@ -122,12 +106,12 @@ export default function HeroLaunchSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          E-verse Academy is Kenya's{" "}
+           Kenya's{" "}
           <span className="font-semibold text-green-200">digital gateway</span>{" "}
           to professional tech skills.
           <br />
-          Join a movement{" "}
-          <span className="font-semibold text-green-400">redefining learning</span>{" "}
+          Welcome{" "}
+          <span className=" text-green-400"> to Your Future of Learning</span>{" "}
           and unlocking opportunity.
         </motion.p>
 
@@ -136,24 +120,12 @@ export default function HeroLaunchSection() {
 
 
 {/* Launching Soon CTA */}
-        <motion.div
-          className="flex justify-center mt-12 mb-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <motion.div
-            className="relative group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <div className="bg-gradient-to-r from-purple-700 to-pink-400 text-white border-0 backdrop-blur-lg rounded-full px-8 py-4 shadow-2xl font-semibold text-lg flex items-center space-x-2">
-              <Clock className="w-5 h-5" />
-              <span>Launching Soon</span>
-            </div>
-      
-          </motion.div>
-        </motion.div>
+       {/* Improved Launching Soon CTA */}
+<div className="mt-12 mb-8">
+  <LaunchingSoon />
+</div>
+
+
 
 
 {/* Countdown Timer */}

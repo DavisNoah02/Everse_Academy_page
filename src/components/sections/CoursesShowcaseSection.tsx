@@ -193,7 +193,7 @@ export default function CoursesSection() {
           viewport={{ once: true }}
         >
           <motion.div
-            className={`inline-flex items-center space-x-2 rounded-full px-6 py-3 mb-6 border bg-slate-200 ${
+            className={`inline-flex items-center space-x-2 rounded-full px-6 py-3 mb-6 border bg-gray-600 ${
               theme === "dark"
                 ? "bg-gray-800/60 border-gray-700/50 backdrop-blur-sm"
                 : "bg-white/60 border-blue-200/50 backdrop-blur-sm"
@@ -211,19 +211,12 @@ export default function CoursesSection() {
               theme === "dark" ? "text-white" : "text-gray-900"
             }`}
           >
-            Master Web Development with{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-emerald-600">
+            Our{" "}
+            <span className="bg-gradient-to-r from-blue-300 to-emerald-500 bg-clip-text text-emerald-600">
               Expert-Led Courses
             </span>
           </h2>
-          <p
-            className={`text-xl max-w-3xl mx-auto leading-relaxed ${
-              theme === "dark" ? "text-gray-300" : "text-gray-600"
-            }`}
-          >
-            From HTML & CSS basics to full-stack development - become a professional web developer with hands-on
-            projects
-          </p>
+          
         </motion.div>
 
         {/* Tab Navigation */}

@@ -112,7 +112,7 @@ export default function JoinBetaSection() {
 
             <h3 className="text-2xl font-bold text-white mb-4">Ready to Get Started?</h3>
             <p className="text-sm text-gray-300 mb-6">
-              Join thousands of learners who are already preparing for the future of work in Kenya.
+              Join  other learners who are already preparing for the future of work in Kenya.
               Apply now and become part of Kenya's tech revolution.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

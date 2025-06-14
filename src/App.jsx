@@ -21,7 +21,7 @@ function App() {
               ))}
             </Routes>
           </Suspense>
-          <Analytics /> {/*  Analytics here */}
+          <Analytics /> 
         </Router>
       </RadixTheme>
     </ThemeProvider>
