@@ -1,4 +1,3 @@
-"use client"
 
 import { motion } from "framer-motion"
 import {
@@ -17,71 +16,12 @@ import {
   Code,
   Trophy,
 } from "lucide-react"
+import { useTheme } from "@/components/themeProvider";
+import { problems, learningPath } from "@/data/whySkillKenyaData"
 
-const problems = [
-  {
-    icon: Search,
-    title: "Endless Searching",
-    description:
-      "You spend hours jumping between YouTube, Stack Overflow, and random blogs trying to find the right tutorial for your skill level.",
-  },
-  {
-    icon: Clock,
-    title: "Outdated Content",
-    description:
-      "You follow a tutorial from 2018 only to discover the framework has completely changed and nothing works anymore.",
-  },
-  {
-    icon: BookOpen,
-    title: "Fragmented Learning",
-    description:
-      "You learn HTML from one source, CSS from another, and JavaScript from a third - with no connection between them.",
-  },
-  {
-    icon: Target,
-    title: "No Clear Direction",
-    description: "You're learning random skills without knowing if they'll actually help you land the job you want.",
-  },
-]
 
-const learningPath = [
-  {
-    icon: PlayCircle,
-    title: "Learn Fundamentals",
-    description: "Master web development basics with our structured curriculum.",
-    color: "from-purple-500 to-purple-600",
-    bgColor: "bg-purple-500",
-    step: 1,
-    side: "left",
-  },
-  {
-    icon: Target,
-    title: "Build Real Projects",
-    description: "Apply your skills on industry-relevant portfolio projects.",
-    color: "from-blue-500 to-blue-600",
-    bgColor: "bg-blue-500",
-    step: 2,
-    side: "right",
-  },
-  {
-    icon: Award,
-    title: "Get Certified",
-    description: "Earn recognized certifications that validate your expertise.",
-    color: "from-emerald-500 to-emerald-600",
-    bgColor: "bg-emerald-500",
-    step: 3,
-    side: "left",
-  },
-  {
-    icon: Briefcase,
-    title: "Land Your Job",
-    description: "Connect with hiring partners and launch your tech career.",
-    color: "from-orange-500 to-orange-600",
-    bgColor: "bg-orange-500",
-    step: 4,
-    side: "right",
-  },
-]
+
+
 
 const successMetrics = [
   { label: "Structured Curriculum", icon: BookOpen },
@@ -91,34 +31,41 @@ const successMetrics = [
 ]
 
 export default function WhySkillKenya() {
+
+  const { theme } = useTheme();
+  
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+    <section
+      className={`py-10 px-6 ${
+        theme === "dark" ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" : "bg-gradient-to-br from-slate-700 via-slate-500 to-slate-700"
+      }`}
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.1),transparent_50%)] pointer-events-none" />
 
-      <div className="container mx-auto px-6 max-w-6xl relative">
+      <div className="container mx-auto px-6 max-w-6xl">
         {/* Header - Left aligned */}
         <motion.div
-          className="text-left mb-16"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
+          <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
             <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="text-blue-300 text-sm font-medium">Your Learning Journey</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Why Choose{" "}
             <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
               E-verse Academy?
             </span>
           </h2>
 
-          <p className="text-xl text-slate-300 max-w-3xl">
+          <p className="text-xl text-gray-400 dark:text-gray-100 max-w-3xl mx-auto py-3">
             Stop wasting time on scattered tutorials and outdated content. Join thousands of students who've transformed
             their careers with our proven learning system.
           </p>
@@ -188,7 +135,7 @@ export default function WhySkillKenya() {
             </div>
 
             <p className="text-slate-200 mb-6 text-left">
-              Join over 2,500+ students who've successfully launched their tech careers with our structured approach:
+              Be part of students who will successfully launch their tech careers with our structured approach:
             </p>
 
             <div className="space-y-4">
@@ -221,7 +168,7 @@ export default function WhySkillKenya() {
           </motion.div>
         </div>
 
-        {/* Vertical Learning Path - Matching the image design */}
+        {/* Vertical Learning Path  */}
         <motion.div
           className="mb-10"
           initial={{ opacity: 0, y: 20 }}
@@ -229,60 +176,13 @@ export default function WhySkillKenya() {
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <div className="text-left mb-6">
-            <h3 className="text-2xl font-bold mb-2">Your Clear Path to Success</h3>
-            <p className="text-slate-300 max-w-2xl">
-              Our proven 4-step methodology takes you from beginner to employed developer.
-            </p>
-          </div>
-
-          <div className="relative max-w-4xl mx-auto">
-            {/* Vertical connecting line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 via-blue-500 via-emerald-500 to-orange-500 transform -translate-x-1/2 rounded-full" />
-
-            <div className="space-y-8">
-              {learningPath.map((step, idx) => {
-                const Icon = step.icon
-                return (
-                  <motion.div
-                    key={step.title}
-                    className="relative flex items-center"
-                    initial={{ opacity: 0, x: step.side === "left" ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.2 }}
-                    viewport={{ once: true }}
-                  >
-                    {/* Step circle */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                      <div
-                        className={`w-12 h-12 ${step.bgColor} rounded-full flex items-center justify-center shadow-lg border-2 border-slate-800`}
-                      >
-                        <Icon className="w-5 h-5 text-white" />
-                      </div>
-                      {/* Step number */}
-                      <div className="absolute -top-1 -right-1 bg-white text-slate-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                        {step.step}
-                      </div>
-                    </div>
-
-                    {/* Content card */}
-                    <div className={`w-72 ${step.side === "left" ? "mr-auto pr-20" : "ml-auto pl-20"}`}>
-                      <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50">
-                        <h4 className="text-lg font-bold text-white mb-2">{step.title}</h4>
-                        <p className="text-slate-300 text-sm text-left leading-relaxed">{step.description}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </div>
+          
 
           {/* Success metrics */}
           <div className="mt-8 bg-gradient-to-r from-blue-500/10 to-emerald-500/10 rounded-2xl p-4 border border-blue-400/20">
-            <div className="flex items-center gap-2 mb-6">
-              <ArrowRight className="w-5 h-5 text-emerald-400" />
-              <h4 className="text-xl font-bold text-white">What You Get With Our Structured Approach</h4>
+            <div className="flex-1 items-center gap-2 mb-6">
+              <ArrowRight className=" w-5 h-5 text-emerald-400" />
+              <h4 className="text-xl  font-bold text-white">What You Get With Our Structured Approach</h4>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

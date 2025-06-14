@@ -1,68 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
 import { HelpCircle } from "lucide-react";
 import { useTheme } from "@/components/themeProvider";
-
-const faqs = [
-  {
-    question: "How much will courses cost?",
-    answer:
-      "Our courses will be affordably priced, with flexible payment options including one-time payments, subscriptions, and occasional discounts. We’re committed to making high-quality education accessible to everyone.",
-  },
-  {
-    question: "How will the courses be delivered?",
-    answer:
-      "Courses will be delivered 100% online through our upcoming Learning Management Platform, featuring video lessons, interactive quizzes, real-time feedback, and community discussion boards to keep you engaged and on track.",
-  },
-  {
-    question: "Will I receive a certificate?",
-    answer:
-      "Absolutely. Once you complete a course and pass all required assessments, you’ll receive a verifiable digital certificate that you can share on LinkedIn or include in your portfolio.",
-  },
-  {
-    question: "How can I become a beta tester?",
-    answer:
-      "Just sign up on our website and opt in for beta testing. As a beta tester, you’ll get early access to our courses, exclusive feedback opportunities, and perks when we launch officially.",
-  },
-  {
-    question: "What is Everse Academy Kenya  Platform all about?",
-    answer:
-      "Our Everse Academy Kenya LMS is designed from the ground up to help you learn faster and smarter. Expect features like gamified progress tracking, AI-powered learning suggestions, peer collaboration tools, and offline access. It’s more than just video lessons—it's an ecosystem built to elevate your skills.",
-  },
-  {
-    question: "Can I access the courses on mobile?",
-    answer:
-      "Yes! Our LMS will be fully responsive and optimized for both mobile and desktop, so you can learn anytime, anywhere—even on the go.",
-  },
-  {
-    question: "Will there be live sessions or mentorship?",
-    answer:
-      "Yes, some premium courses will include live Q&A sessions, mentorship from industry pros, and community office hours so you’re never learning alone.",
-  },
-];
-
+import { faqs } from "@/data/faqs";
 
 export default function FAQsSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const { theme } = useTheme();
 
-  // Filter FAQs based on the search query
+  // Newsletter states
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      await axios.post("/api/subscribe", { email });
+      setIsSubscribed(true);
+      setMessage("✅ Thanks for subscribing! We'll keep you updated.");
+    } catch (error) {
+      console.error("Subscription failed:", error);
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const filteredFaqs = faqs.filter((faq) =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <section className={`relative min-h-screen py-12 px-6 ${
-        theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-700 text-black"
+    <section
+      className={`relative min-h-screen overflow-hidden py-8 px-6 shadow-lg flex flex-col items-center justify-center ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-900"
       }`}
     >
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-center">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-center mb-6">
           <HelpCircle size={40} className="text-green-400 mr-4" />
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-3xl font-bold text-center">
             Frequently Asked Questions
           </h2>
         </div>
-        <p className="text-center text-slate-300 mb-6">
+        <p className="text-center text-slate-500 dark:text-slate-300 mb-6">
           Find quick answers to common questions about Everse Academy.
         </p>
 
@@ -73,32 +69,104 @@ export default function FAQsSection() {
             placeholder="Search FAQs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-lg bg-slate-200 dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         {/* FAQ Items */}
-        <div className="space-y-4 max-w-3xl mx-auto">
+        <div className="space-y-4 max-w-3xl mx-auto mb-12">
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq, index) => (
               <details
                 key={index}
-                className="bg-slate-700 rounded-lg shadow-lg p-4 group"
+                className="bg-slate-100 dark:bg-slate-700 rounded-lg shadow-lg p-4 group"
               >
-                <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-300 group-hover:text-purple-400">
+                <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-purple-700 dark:text-purple-300 group-hover:text-purple-500 dark:group-hover:text-purple-400">
                   {faq.question}
-                  <span className="text-purple-400 group-hover:text-purple-500">+</span>
+                  <span className="text-purple-600 dark:text-purple-400 group-hover:text-purple-700 dark:group-hover:text-purple-500">
+                    +
+                  </span>
                 </summary>
-                <p className="mt-2 text-slate-300">{faq.answer}</p>
+                <p className="mt-2 text-gray-700 dark:text-slate-300">
+                  {faq.answer}
+                </p>
               </details>
             ))
           ) : (
-            <p className="text-center text-slate-400">
+            <p className="text-center text-gray-600 dark:text-slate-400">
               No FAQs match your search query.
             </p>
           )}
         </div>
+
+        {/* Newsletter Section  */}
+        <div className="max-w-5xl mx-auto flex flex-col gap-6 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-700 text-white rounded-2xl p-6 shadow-lg">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-2">
+              Get notified! Stay Updated
+            </h2>
+            <p className="text-sm text-slate-200">
+              Subscribe to our newsletter and never miss important updates,
+              news, or offers.
+            </p>
+          </div>
+
+          <form
+            onSubmit={handleSubscribe}
+            className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full"
+          >
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full max-w-md px-3 py-2 rounded-md bg-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              disabled={isLoading || isSubscribed}
+              className={`bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-500 border border-purple-400/20 hover:cursor-pointer ${
+                isSubscribed
+                  ? "bg-green-600 cursor-default text-white"
+                  : isLoading
+                  ? "bg-blue-400 text-white cursor-wait"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
+            >
+              {isLoading
+                ? "Subscribing..."
+                : isSubscribed
+                ? "Subscribed ✅"
+                : "Subscribe"}
+            </motion.button>
+          </form>
+
+          {message && (
+            <p
+              className={`text-center text-sm ${
+                isSubscribed ? "text-green-400" : "text-red-400"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+
+          <p className="text-center text-sm text-slate-300">
+            You can{" "}
+            <a href="/newsletter" className="text-blue-400 underline">
+              unsubscribe
+            </a>{" "}
+            anytime.
+          </p>
+        </div>
       </div>
+
+      {/* Decorative Backgrounds */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.1),transparent_50%)] pointer-events-none" />
     </section>
   );
 }

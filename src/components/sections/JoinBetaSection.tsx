@@ -12,10 +12,10 @@ export default function JoinBetaSection() {
   return (
     <section
       className={`py-12 px-6 ${
-        theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-700 text-black"
+        theme === "dark" ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" : "bg-gradient-to-br from-slate-700 via-slate-500 to-slate-700"
       }`}
     >
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-6 max-w-6xl">
         {/* Header */}
         <motion.div
           className="text-center mb-16"
@@ -30,7 +30,7 @@ export default function JoinBetaSection() {
           </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-5">
             <Rocket className="w-8 h-10 py-1 text-purple-600" />
-            Join Our <span className="text-gradient bg-gradient-to-r from-purple-800 to-blue-600 bg-clip-text text-transparent">Beta Program</span>
+            Join Our <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Beta Program</span>
             </h2>
           <p className="text-xl text-gray-400 dark:text-gray-100 max-w-3xl mx-auto py-3">
             Be among the first 100 learners to experience Kenya's most innovative tech academy
@@ -74,7 +74,7 @@ export default function JoinBetaSection() {
   >
     <div className="bg-gray-400 dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 h-full">
       <div className="flex items-center space-x-3 mb-5">
-        <div className="w-8 h-8 bg-gray-600 rounded-lg flex items-center justify-center">
+        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-lg flex items-center justify-center">
           <Target className="w-4 h-4 text-white" />
         </div>
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Getting Started</h3>
@@ -118,7 +118,7 @@ export default function JoinBetaSection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {/* Apply for Beta Access Button */}
               <motion.button
-                className="relative z-40 bg-white text-gray-800 px-6 py-3 rounded-full font-medium text-sm shadow-md hover:shadow-lg transition-all hover:cursor-pointer"
+                className="relative z-40 bg-white text-gray-800 px-6 py-3 rounded-full font-medium text-sm shadow-md hover:shadow-lg transition-all hover:cursor-pointer bg-gradient-to-r from-blue-500 to-emerald-500"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsModalOpen(true)}
