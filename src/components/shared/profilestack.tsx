@@ -7,8 +7,9 @@ export default function ProfileStack() {
   const profiles = Array.from({ length: 2}, (_, i) => ({
     id: i,
     gradient: [
-      "from-purple-500 to-pink-600",
-     "from-purple-500 to-pink-600",
+      "from-blue-600 to-blue-800",
+     "from-blue-600 to-blue-800"
+
     ][i],
   }));
 

@@ -6,6 +6,8 @@ import WhyPlatformSection from "@/components/sections/WhyPlatformSection";
 import CoursesShowcaseSection from "@/components/sections/CoursesShowcaseSection";
 import FAQsSection from "@/components/sections/FAQs_Section";
 import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar.tsx";
+
 
 
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPage"));
@@ -17,7 +19,7 @@ const routes = [
   {
     path: "/",
     element: (
-      <> 
+      <>
         <FloatingModeToggle />
         <HeroLaunchSection />
         <JoinBetaSection />
