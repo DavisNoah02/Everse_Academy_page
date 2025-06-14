@@ -128,7 +128,18 @@ const Footer = () => {
             </a>
           ))}
         </div>
-        <p>Built with ❤️ by <a href="https://github.com/noa-dave" target="_blank" className="text-blue-400 hover:underline">noa.dave</a></p>
+         <p>
+           Built with ❤️ by{" "}
+           <a
+             href="https://github.com/noa-dave"
+             target="_blank"
+             rel="noopener"
+             className="text-blue-400 hover:underline"
+           >
+             noa.dave
+           </a>
+         </p>
+
       </div>
     </footer>
   );
