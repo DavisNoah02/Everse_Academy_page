@@ -2,7 +2,6 @@ import React, { lazy } from "react";
 import FloatingModeToggle from "@/components/shared/FloatingModeToggle";
 import HeroLaunchSection from "@/components/sections/HeroLaunchSection";
 import JoinBetaSection from "@/components/sections/JoinBetaSection";
-import NewsletterSection from "@/components/layout/NewsLetter";
 import WhyPlatformSection from "@/components/sections/WhyPlatformSection";
 import CoursesShowcaseSection from "@/components/sections/CoursesShowcaseSection";
 import FAQsSection from "@/components/sections/FAQs_Section";
@@ -25,7 +24,6 @@ const routes = [
         <WhyPlatformSection />
         <CoursesShowcaseSection />
         <FAQsSection />
-        <NewsletterSection />
         <Footer />
       </>
     ),
