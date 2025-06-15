@@ -37,7 +37,7 @@ export default async function handler(
   // Get email from request body
   const { email } = req.body;
 
-    // Validate email parameter
+    // Validate email parameters
   if (!email || typeof email !== 'string') {
     return res.status(400).json({ result: false, reason: 'invalid_email_parameter' });
   }
