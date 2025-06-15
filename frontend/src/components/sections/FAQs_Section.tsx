@@ -37,12 +37,21 @@ export default function FAQsSection() {
     }
   };
 
+  // Effect to clear message after 10 seconds
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => setMessage(""), 10000);
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  // New: Effect to revert subscribe button after 5 seconds
+  useEffect(() => {
+    if (isSubscribed) {
+      const timer = setTimeout(() => setIsSubscribed(false), 7000); // Revert after 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isSubscribed]);
 
   const filteredFaqs = faqs.filter((faq) =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase())
@@ -136,11 +145,11 @@ export default function FAQsSection() {
               )}
             </div>
             <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
+               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={isLoading || isSubscribed || isVerifying}
-              className={`bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transition-all duration-500 border border-purple-400/20 ${
+              className={`bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-9 py-3 rounded-xl font-semibold shadow-lg shadow-purple-500/25 transition-all duration-500 border border-purple-400/20 ${
                 isSubscribed
                   ? "bg-green-600 cursor-default"
                   : isLoading || isVerifying
@@ -153,7 +162,7 @@ export default function FAQsSection() {
                 : isLoading
                 ? "Subscribing..."
                 : isSubscribed
-                ? "Subscribed ✅"
+                ? "Subscribed "
                 : "Subscribe"}
             </motion.button>
           </form>
@@ -161,7 +170,7 @@ export default function FAQsSection() {
           {message && (
             <p
               className={`text-center text-sm ${
-                isSubscribed ? "text-green-400" : "text-red-400"
+                message.startsWith("✅") ? "text-green-400" : "text-red-400"
               }`}
             >
               {message}

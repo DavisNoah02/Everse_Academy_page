@@ -324,14 +324,14 @@ export default function CoursesSection() {
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <motion.button
-                  className="text-white px-6 py-4 rounded-2xl font-semibold shadow-lg shadow-gray-500/25 hover:shadow-gray-500/40 transition-all duration-500 border border-gray-400/20 bg-gradient-to-r from-green-500 to-emerald-500 hover:cursor-pointer"
+                  className="text-white px-6 py-4 rounded-2xl font-semibold shadow-lg shadow-gray-500/25 hover:shadow-gray-500/40 transition-all duration-500 border border-gray-400/20 bg-gradient-to-r from-green-700 to-emerald-800 hover:cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Start with Free Courses
                 </motion.button>
                 <motion.button
-                  className="text-white px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-gray-500/25 hover:shadow-gray-500/40 transition-all duration-500 border border-gray-400/20 bg-gradient-to-r from-blue-500 to-emerald-500 hover:cursor-pointer"
+                  className="text-white px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-gray-500/25 hover:shadow-gray-500/40 transition-all duration-500 border border-gray-400/20 bg-gradient-to-r from-blue-700 to-emerald-800 hover:cursor-pointer"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >

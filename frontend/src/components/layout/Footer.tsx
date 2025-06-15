@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import {
-  Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin,
+  Facebook, Twitter, Instagram, Linkedin,Github, Mail, Phone, MapPin,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { subscribeToNewsletter } from "@/services/newsletter";
 
 const Footer = () => {
@@ -33,6 +33,22 @@ const Footer = () => {
       setIsVerifying(false);
     }
   };
+
+  // Effect to clear message after 10 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  // New: Effect to revert subscribe button after 5 seconds
+  useEffect(() => {
+    if (isSubscribed) {
+      const timer = setTimeout(() => setIsSubscribed(false), 5000); // Revert after 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isSubscribed]);
 
   return (
     <footer className="relative bg-slate-900 text-white px-8 py-6 overflow-hidden">
@@ -114,7 +130,7 @@ const Footer = () => {
           <p className="text-slate-300 mb-3">
             Get updates, tips, and offers directly to your inbox.
           </p>
-          <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
+          <form onSubmit={handleSubscribe} className="flex flex-col gap-6">
             <div className="relative">
               <input
                 type="email"
@@ -136,7 +152,7 @@ const Footer = () => {
               whileTap={{ scale: 0.95 }}
               type="submit"
               disabled={isLoading || isSubscribed || isVerifying}
-              className={`bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-4 py-2 rounded-md transition ${
+              className={`bg-gradient-to-r from-blue-500 to-emerald-500 text-white px-9 py-3 rounded-xl font-semibold shadow-lg shadow-purple-500/25 transition-all duration-500 border border-purple-400/20  ${
                 isSubscribed
                   ? "bg-green-600 cursor-default"
                   : isLoading || isVerifying
@@ -149,14 +165,14 @@ const Footer = () => {
                 : isLoading
                 ? "Subscribing..."
                 : isSubscribed
-                ? "Subscribed ✅"
+                ? "Subscribed "
                 : "Subscribe"}
             </motion.button>
           </form>
           {message && (
             <p
               className={`text-sm ${
-                isSubscribed ? "text-green-400" : "text-red-400"
+                message.startsWith("✅") ? "text-green-400" : "text-red-400"
               }`}
             >
               {message}
@@ -174,6 +190,7 @@ const Footer = () => {
             { href: "#", icon: Twitter },
             { href: "#", icon: Instagram },
             { href: "#", icon: Linkedin },
+            { href: "https://github.com/DavisNoah02", icon: Github },
           ].map(({ href, icon: Icon }, idx) => (
             <a key={idx} href={href} className="hover:text-white transition">
               <Icon className="w-5 h-5" />

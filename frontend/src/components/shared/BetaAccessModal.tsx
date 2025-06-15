@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { X, CheckCircle, AlertCircle } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { X, CheckCircle, AlertCircle, Loader } from "lucide-react";
 import { submitForm } from "@/services/formspree";
 import { verifyEmailHunter } from "@/services/hunter";
 
@@ -41,6 +41,7 @@ export default function BetaAccessModal({ isOpen, onClose }: BetaAccessModalProp
   const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
   const [emailVerifying, setEmailVerifying] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Basic email format validation
   const isValidEmailFormat = (email: string): boolean => {
@@ -122,21 +123,78 @@ export default function BetaAccessModal({ isOpen, onClose }: BetaAccessModalProp
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+
+    // Special handling for email field to debounce verification
+    if (name === 'email') {
+      setEmailVerified(false); // Reset verified state immediately on input
+      setEmailVerifying(false); // Clear verifying state
+      
+      // Clear any existing debounce timeout
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    }
   };
 
-  // Verify email with Hunter.io when email field loses focus
-  const handleEmailBlur = async () => {
+  // Effect to debounce email verification
+  useEffect(() => {
+    if (formData.email && touched.email) { // Only debounce if email has a value and has been touched
+      // Validate format immediately. If invalid, show error and don't debounce.
+      if (!isValidEmailFormat(formData.email)) {
+        setErrors(prev => ({
+          ...prev,
+          email: 'Please enter a valid email format'
+        }));
+        setEmailVerified(false);
+        setEmailVerifying(false);
+        return; // Don't proceed with verification for invalid format
+      } else {
+        // Clear format error if it was previously set
+        if (errors.email === 'Please enter a valid email format') {
+          setErrors(prev => ({ ...prev, email: '' }));
+        }
+      }
+
+      setEmailVerifying(true); // Indicate that verification is pending/about to start
+      setEmailVerified(false); // Reset to unverified
+
+      // Set a new debounce timeout
+      debounceTimeoutRef.current = setTimeout(() => {
+        handleEmailVerification();
+      }, 500); // Debounce for 500ms
+    } else if (!formData.email && touched.email) {
+      // If email field is cleared after being touched, clear all email-related states and errors
+      setErrors(prev => ({ ...prev, email: '' }));
+      setEmailVerifying(false);
+      setEmailVerified(false);
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    }
+
+    // Cleanup function for the effect
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, [formData.email, touched.email]); // Re-run effect when email changes or touched state changes
+
+  // Renamed from handleEmailBlur to handleEmailVerification for clarity
+  const handleEmailVerification = async () => {
+    // This check is already done in useEffect, but good to keep as a safeguard
     if (!formData.email || !isValidEmailFormat(formData.email)) {
       setEmailVerified(false);
       setErrors(prev => ({
         ...prev,
         email: 'Please enter a valid email address (e.g., name@domain.com)'
       }));
+      setEmailVerifying(false); // Ensure verifying state is off
       return;
     }
 
     setEmailVerifying(true);
-    setEmailVerified(false);  // Reset verification status
+    setEmailVerified(false); // Reset verification status
     
     try {
       const verification = await verifyEmailHunter(formData.email);
@@ -183,7 +241,7 @@ export default function BetaAccessModal({ isOpen, onClose }: BetaAccessModalProp
         }));
         setEmailVerified(false);
       } else {
-        setErrors(prev => ({ ...prev, email: '' }));
+        setErrors(prev => ({ ...prev, email: '' })); // Clear any previous error on success
         setEmailVerified(true);
       }
     } catch (error) {
@@ -249,141 +307,133 @@ export default function BetaAccessModal({ isOpen, onClose }: BetaAccessModalProp
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="bg-gray-900 rounded-xl p-6 w-full max-w-md relative shadow-lg border border-gray-700 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm bg-opacity-50">
+      <div className="bg-white border border-green-600 dark:bg-gray-900 rounded-lg p-6 w-full max-w-md shadow-lg relative max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-out">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-200"
-          title="Close"
-          aria-label="Close"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
+          <X className="h-6 w-6" />
         </button>
-
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-bold text-white mb-2">Join Our Beta Program</h2>
-          <p className="text-gray-400 text-sm">Get exclusive early access to cutting-edge learning experiences.</p>
-        </div>
-
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">Join Our Beta Program</h2>
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-6">Get exclusive early access to cutting-edge learning experiences.</p>
         {success ? (
-          <div className="text-center">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-green-400 mb-3">Application Submitted! 🎉</h3>
-            <p className="text-gray-400 mb-6">Thank you for your interest. We will contact you soon.</p>
+          <div className="text-center py-8">
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <p className="text-lg font-semibold text-gray-900 dark:text-white">Thank you for your interest!</p>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">We've received your application. We'll be in touch soon with updates regarding your access to the Everse Academy Beta Program.</p>
             <button
               onClick={onClose}
-              className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-all"
+              className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
             >
               Close
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* HoneyPot Field */}
-            <div className="hidden" aria-hidden="true">
-              <label htmlFor="botField" className="sr-only">Leave this field empty</label>
-              <input
-                type="text"
-                name="botField"
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Honeypot field */}
+            <label className="hidden" htmlFor="botField">
+              <input 
+                type="text" 
                 id="botField"
+                name="botField" 
                 value={formData.botField}
-                onChange={handleChange}
-                autoComplete="off"
-                tabIndex={-1}
+                aria-hidden="true"
+                onChange={handleChange} 
+                tabIndex={-1} 
+                autoComplete="off" 
               />
-            </div>
-
-            {/* Full Name Field */}
+            </label>
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1 text-left">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">
                 Full Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
+                id="name"
                 name="name"
-                placeholder="Enter your full name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 bg-gray-800 text-gray-200 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${
-                  errors.name ? "border-red-500" : "border-gray-600"
-                }`}
+                onBlur={() => setTouched(prev => ({ ...prev, name: true }))}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Enter your full name"
+                required
               />
-              {errors.name && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  {errors.name}
-                </p>
+              {touched.name && errors.name && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
               )}
             </div>
-
-            {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1 text-left">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">
                 Email Address <span className="text-red-500">*</span>
               </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="your.email@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onBlur={handleEmailBlur}
-                  className={`w-full px-3 py-2 bg-gray-800 text-gray-200 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${
-                    errors.email ? "border-red-500" : "border-gray-600"
-                  }`}
-                />
-                {emailVerifying && (
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                  </div>
-                )}
-              </div>
-              {errors.email && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  {errors.email}
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                // Removed onBlur as verification is now debounced
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="your.email@example.com"
+                required
+              />
+              {emailVerifying && (
+                <p className="mt-1 text-sm text-blue-600 dark:text-blue-400 flex items-center">
+                  <Loader className="h-4 w-4 mr-2 animate-spin" /> Verifying...
+                </p>
+              )}
+              {emailVerified && !emailVerifying && !errors.email && (
+                <p className="mt-1 text-sm text-green-600 dark:text-green-400 flex items-center">
+                  <CheckCircle className="h-4 w-4 mr-2" /> Verified email address
+                </p>
+              )}
+              {touched.email && errors.email && !emailVerifying && ( /* Email format error or Hunter.io error */
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400 flex items-center">
+                  <AlertCircle className="h-4 w-4 mr-2" /> {errors.email}
+                </p>
+              )}
+              {touched.email && !errors.email && !emailVerifying && !emailVerified && formData.email && isValidEmailFormat(formData.email) && (
+                <p className="mt-1 text-sm text-yellow-600 dark:text-yellow-400 flex items-center">
+                  <AlertCircle className="h-4 w-4 mr-2" /> Email not verified. Please check your email or try again.
                 </p>
               )}
             </div>
-
-            {/* Phone Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1 text-left">Phone Number</label>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">Phone Number (Optional)</label>
               <input
                 type="tel"
+                id="phone"
                 name="phone"
-                placeholder="+254 700 000 000"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="+254 700 000 000"
               />
-            </div>
-
-            {/* GitHub Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1 text-left">GitHub Profile</label>
-              <input
-                type="url"
-                name="github"
-                placeholder="https://github.com/yourusername"
-                value={formData.github}
-                onChange={handleChange}
-                className={`w-full px-3 py-2 bg-gray-800 text-gray-200 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${
-                  errors.github ? "border-red-500" : "border-gray-600"
-                }`}
-              />
-              {errors.github && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  {errors.github}
-                </p>
+              {touched.phone && errors.phone && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>
               )}
             </div>
-
-            {/* Primary Learning Interest Field */}
             <div>
-              <label htmlFor="interest" className="block text-sm font-medium text-gray-300 mb-1 text-left">
+              <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">Location (City, Country - Optional)</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                onBlur={() => setTouched(prev => ({ ...prev, location: true }))}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Nairobi, Kenya"
+              />
+              {touched.location && errors.location && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.location}</p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="interest" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">
                 Primary Learning Interest <span className="text-red-500">*</span>
               </label>
               <select
@@ -391,83 +441,70 @@ export default function BetaAccessModal({ isOpen, onClose }: BetaAccessModalProp
                 name="interest"
                 value={formData.interest}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 bg-gray-800 text-gray-200 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none ${
-                  errors.interest ? "border-red-500" : "border-gray-600"
-                }`}
+                onBlur={() => setTouched(prev => ({ ...prev, interest: true }))}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                required
               >
                 <option value="">Choose your area of interest</option>
                 <option value="Web Development">Web Development</option>
-                <option value="Data Science">Data Science & Analytics</option>
-                <option value="AI/ML">AI & Machine Learning</option>
                 <option value="Mobile Development">Mobile Development</option>
-                <option value="Cloud Computing">Cloud Computing</option>
+                <option value="Data Science">Data Science</option>
                 <option value="Cybersecurity">Cybersecurity</option>
-                <option value="DevOps">DevOps & Infrastructure</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="Cloud Computing">Cloud Computing</option>
                 <option value="Other">Other</option>
               </select>
-              {errors.interest && (
-                <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />
-                  {errors.interest}
-                </p>
+              {touched.interest && errors.interest && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.interest}</p>
               )}
             </div>
-
-            {/* Consent Checkbox */}
-            <div className="flex items-start gap-3">
+            <div>
+              <label htmlFor="github" className="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left mb-2 ">GitHub Profile URL (Optional)</label>
               <input
-                type="checkbox"
+                type="url"
+                id="github"
+                name="github"
+                value={formData.github}
+                onChange={handleChange}
+                onBlur={() => setTouched(prev => ({ ...prev, github: true }))}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="https://github.com/yourusername"
+              />
+              {touched.github && errors.github && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.github}</p>
+              )}
+            </div>
+            <div className="flex items-center">
+              <input
                 id="consent"
                 name="consent"
+                type="checkbox"
                 checked={formData.consent}
                 onChange={handleChange}
-                className={`w-5 h-5 text-blue-500 rounded focus:ring-blue-500 border-gray-600 bg-gray-800 ${
-                  errors.consent ? 'border-red-500' : ''
-                }`}
+                onBlur={() => setTouched(prev => ({ ...prev, consent: true }))}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                required
               />
-              <label htmlFor="consent" className="text-sm text-gray-300 leading-relaxed">
-                I agree to receive program updates and communications via email or other channels. <span className="text-red-500">*</span>
+              <label htmlFor="consent" className="ml-2 block text-sm text-gray-900 dark:text-gray-300 text-left mb-2 ">
+                I agree to receive program updates and terms and conditions.
               </label>
             </div>
-            {errors.consent && (
-              <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                <AlertCircle className="w-3 h-3" />
-                {errors.consent}
+            {touched.consent && errors.consent && (
+              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.consent}</p>
+            )}
+            {errors.submit && (
+              <p className="mt-4 text-sm text-red-600 dark:text-red-400 text-center">
+                <AlertCircle className="h-4 w-4 inline mr-1" /> {errors.submit}
               </p>
             )}
-
-            {/* Submit Error */}
-            {errors.submit && (
-              <div className="p-3 bg-red-900/50 border border-red-500 text-red-200 rounded-lg">
-                <p className="text-sm flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4" />
-                  {errors.submit}
-                </p>
-              </div>
-            )}
-
             <button
               type="submit"
-              disabled={submitting || emailVerifying}
-              className={`w-full px-4 py-2 rounded-lg font-semibold text-white transition-all ${
-                submitting || emailVerifying
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500"
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500${
+                submitting ? ' opacity-50 cursor-not-allowed' : ''
               }`}
+              disabled={submitting}
             >
-              {submitting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Submitting...
-                </span>
-              ) : emailVerifying ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Verifying Email...
-                </span>
-              ) : (
-                "Submit Beta Application"
-              )}
+              {submitting ? 'Submitting...' : 'Submit Application'}
             </button>
           </form>
         )}
