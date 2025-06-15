@@ -5,10 +5,5 @@
       "src": "package.json",
       "use": "@vercel/next"
     }
-  ],
-  "env": {
-    "HUNTER_API_KEY": "@hunter_api_key",
-    "MAILCHIMP_API_KEY": "@mailchimp_api_key",
-    "MAILCHIMP_LIST_ID": "@mailchimp_list_id"
-  }
+  ]
 } 
