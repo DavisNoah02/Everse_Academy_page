@@ -131,7 +131,7 @@ export default function JoinBetaSection() {
                 className="relative z-40  bg-gray-800 text-white px-6 py-3 rounded-full font-medium text-sm shadow-md hover:bg-gray-700 hover:cursor-pointer transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.location.href = "/AboutUsPage"}
+                onClick={() => navigate("/AboutUs")}
               >
                 Learn More
               </motion.button>

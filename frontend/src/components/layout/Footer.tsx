@@ -100,7 +100,7 @@ const Footer = () => {
         <div className="space-y-4 lg:text-left md:text-center text-center">
           <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text">Quick Links</h4>
           <ul className="space-y-2 text-slate-300">
-            {["About Us", "Courses", "Instructors", "Blog"].map((item) => (
+            {["AboutUs", "Courses", "Instructors", "Blog"].map((item) => (
               <li key={item}>
                 <Link to={`/${item.toLowerCase().replace(" ", "")}`} className="hover:text-white transition">
                   {item}

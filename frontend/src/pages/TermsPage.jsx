@@ -277,7 +277,7 @@ export default function Terms() {
                   </p>
                   <div className="space-y-2 text-gray-700 dark:text-gray-300">
                     <p>
-                      <strong>Email:</strong> legal@skillkenya.com
+                      <strong>Email:</strong> everse@gmail.com
                     </p>
                     <p>
                       <strong>Phone:</strong> +254 700 000 000
