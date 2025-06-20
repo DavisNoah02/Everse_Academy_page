@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/themeProvider";
 import { Rocket, Check, Star, Target, Users, Gift, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { betaSteps, betaBenefits } from "@/data/betaSteps";
 import BetaAccessModal from "@/components/shared/BetaAccessModal";
 
 export default function JoinBetaSection() {
   const { theme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <section
